@@ -17,7 +17,7 @@ def play_game(level: int):
     attempts_left = CHANCES[difficulty]
     attempts_used = 0
 
-    # print(f"Computer guess: {computer_guess}")  # remove later, use for debugging
+    print(f"Computer guess: {computer_guess}")  # remove later, use for debugging
 
     while attempts_left > 0:
         # get user guess
@@ -27,8 +27,9 @@ def play_game(level: int):
 
         if user_guess == computer_guess:
             print(f"Congratulations! You guessed the correct number in {attempts_used} attempts.\n")
+            break
 
-        elif user_guess < computer_guess:
+        if user_guess < computer_guess:
             print(f"Incorrect! The number is greater than {user_guess}. \n")
 
         else:
@@ -36,7 +37,8 @@ def play_game(level: int):
 
         print(f"Remaining attempts: {attempts_left}. \n")
 
-    print(f"Oops you've run out of guesses! The correct number was {computer_guess}. \n")
+    if attempts_left == 0:
+        print(f"Oops you've run out of guesses! The correct number was {computer_guess}. \n")
 
 
 def get_user_guess():
