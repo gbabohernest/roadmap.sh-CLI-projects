@@ -17,7 +17,7 @@ def play_game(level: int):
     attempts_left = CHANCES[difficulty]
     attempts_used = 0
 
-    print(f"Computer guess: {computer_guess}")  # remove later, use for debugging
+    # print(f"Computer guess: {computer_guess}")  # remove later, use for debugging
 
     while attempts_left > 0:
         # get user guess
