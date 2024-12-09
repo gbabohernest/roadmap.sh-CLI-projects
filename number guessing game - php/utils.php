@@ -111,21 +111,28 @@ EOT;
  */
 function getUserGuess(): int
 {
-    echo "Enter your guess: ";
 
-    fscanf(STDIN, "%d", $userGuess);
+    while (true) {
+        echo "Enter your guess: ";
 
-    if (!$userGuess) {
-        echo "Please Enter a number" . PHP_EOL;
+        fscanf(STDIN, "%d", $userGuess);
+
+        if ($userGuess === 0) {
+            echo "Goodbye! Thanks for checking out the game!\n";
+            die();
+        }
+        if (is_numeric($userGuess) && $result = intval($userGuess) == $userGuess) {
+            return $userGuess;
+        }
+
+        echo "Invalid input. Please enter a valid integer OR Press 0 to quit." . PHP_EOL;
     }
-    return $userGuess;
-
 }
 
 /**
  * Runs the guessing game logic.
  *
- * @param int $difficulty The selected difficulty level.
+ * @param int $levelOfGame The selected difficulty level.
  */
 function runGuessingGame(int $levelOfGame): void
 {
@@ -134,10 +141,13 @@ function runGuessingGame(int $levelOfGame): void
     $maxAttempts = CHANCES[$gameLevel];
     $attemptsUsed = 0;
 
-    // echo("Computer guess: $computerGuess\n");  # remove later, use for debugging
+    echo("Computer guess: $computerGuess\n");  # remove later, use for debugging
 
     while ($attemptsUsed < $maxAttempts) {
+
         $userGuess = getUserGuess();
+
+
         $attemptsUsed += 1;
 
         if ($userGuess === $computerGuess) {
