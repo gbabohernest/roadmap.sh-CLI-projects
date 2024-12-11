@@ -99,7 +99,6 @@ function displayDifficultyOptions(): void
 2. Medium (5 chances)
 3. Hard (3 chances)
 
-Enter your choice: 
 EOT;
 
     echo "$options";
@@ -111,25 +110,28 @@ EOT;
  */
 function getDifficultyChoice(): int
 {
-    fscanf(STDIN, "%d", $choice);
 
-    if ($choice === 0) {
-        echo "Goodbye! Thanks for checking out the game!\n";
-        die();
+    // loop runs until a valid difficulty option is provided.
+    while (true) {
+
+        echo "\nEnter your choice: ";
+        fscanf(STDIN, "%d", $choice);
+
+        if (array_key_exists($choice, GAME_LEVELS)) {
+            return $choice;
+        } else {
+            echo "Invalid selection. Please select a valid level (1, 2 or 3).\n";
+        }
+
+        echo "\nPress 0 to quit the game or 1 to try again: ";
+
+        fscanf(STDIN, "%d", $quitGame);
+
+        if ($quitGame === 0) {
+            echo "Goodbye! Thanks for checking out the game!\n";
+            die();
+        }
     }
-
-    if (!array_key_exists($choice, GAME_LEVELS)) {
-        echo "Invalid selection. Please select a valid level (1, 2 or 3).\n";
-        echo "Enter 0 if you want to quit\n";
-
-        //Re-prompt the user
-        displayDifficultyOptions();
-        return getDifficultyChoice();
-    }
-
-
-//    return GAME_LEVELS[$choice];
-    return $choice;
 }
 
 /**
