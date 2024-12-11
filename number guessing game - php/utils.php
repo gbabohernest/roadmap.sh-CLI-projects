@@ -12,21 +12,19 @@ require_once 'game_constants.php';
  */
 function displayWelcomeMessage(): void
 {
-    $message = <<<EOT
-Welcome to the Number Guessing Game.
-Press 1 to play or 0 to quit: 
-EOT;
-    echo "$message";
+
+    echo "Welcome to the Number Guessing Game.\n";
 }
 
 
 /**
  * Handles the user's choice to play or quit the game.
- *
+ * @param string $message The custom message to ask the user.
  * @return bool Returns true if the user wants to play, otherwise false.
  */
-function handlePlayChoice(): bool
+function handlePlayChoice(string $message): bool
 {
+    echo "$message: ";
     fscanf(STDIN, "%d", $choice);
 
     if ($choice === 1) return true;
@@ -76,14 +74,9 @@ RULE;
             echo "Both bounds must be positive integers greater than 0. Try again.\n";
         }
 
-        // Ask if user wants to quit or try again
-        echo "\nPress 0 to quit the game or 1 to try again: ";
-        fscanf(STDIN, "%d", $quitGame);
-
-        if ($quitGame === 0) {
-            echo "Goodbye! Thanks for checking out the game!\n";
-            die();
-        }
+        // Ask if user wants to quit the game or try again
+        $playAgain = handlePlayChoice("\nPress 0 to quit the game or 1 to try agan: ");
+        if (!$playAgain) die();
     }
 
 }
@@ -123,16 +116,11 @@ function getDifficultyChoice(): int
             echo "Invalid selection. Please select a valid level (1, 2 or 3).\n";
         }
 
-        echo "\nPress 0 to quit the game or 1 to try again: ";
-
-        fscanf(STDIN, "%d", $quitGame);
-
-        if ($quitGame === 0) {
-            echo "Goodbye! Thanks for checking out the game!\n";
-            die();
-        }
+        $playAgain = handlePlayChoice("\nPress 0 to quit the game or 1 to try again: ");
+        if (!$playAgain) die();
     }
 }
+
 
 /**
  * Display the difficulty level user choose and the amount of chances to guess.
@@ -171,15 +159,14 @@ function getUserGuess(): int
 
         fscanf(STDIN, "%d", $userGuess);
 
-        if ($userGuess === 0) {
-            echo "Goodbye! Thanks for checking out the game!\n";
-            die();
-        }
-        if (is_numeric($userGuess) && $result = intval($userGuess) == $userGuess) {
+        if (is_numeric($userGuess) && $userGuess > 0) {
             return $userGuess;
         }
 
-        echo "Invalid input. Please enter a valid integer OR Press 0 to quit." . PHP_EOL;
+        echo "Invalid input. Please enter a valid integer greater than 0." . PHP_EOL;
+
+        $playGame = handlePlayChoice("\nPress 0 to quit the game or 1 to try again: ");
+        if (!$playGame) die();
     }
 }
 

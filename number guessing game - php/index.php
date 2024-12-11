@@ -20,7 +20,7 @@ function main(): void
 {
     displayWelcomeMessage();
 
-    if (!handlePlayChoice()) return;
+    if (!handlePlayChoice("Press 1 to play or 0 to quit")) return;
 
     do {
         $customRange = getCustomRange();
@@ -31,8 +31,7 @@ function main(): void
         displayUserChoiceAndChances($difficultyLevel, $customRange);
         runGuessingGame($difficultyLevel, $customRange);
 
-        echo "\nDo you want to continue playing? 1 for Yes, 0 for No: ";
-        $keepPlaying = handlePlayChoice();
+        $keepPlaying = handlePlayChoice("\nDo you want to continue playing? 1 for Yes, 0 for No: ");
 
 
     } while ($keepPlaying);
