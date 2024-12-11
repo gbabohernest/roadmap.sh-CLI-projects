@@ -23,12 +23,13 @@ function main(): void
     if (!handlePlayChoice()) return;
 
     do {
+        $customRange = getCustomRange();
         displayDifficultyOptions();
 
         $difficultyLevel = getDifficultyChoice();
 
-        displayUserChoiceAndChances($difficultyLevel);
-        runGuessingGame($difficultyLevel);
+        displayUserChoiceAndChances($difficultyLevel, $customRange);
+        runGuessingGame($difficultyLevel, $customRange);
 
         echo "\nDo you want to continue playing? 1 for Yes, 0 for No: ";
         $keepPlaying = handlePlayChoice();
