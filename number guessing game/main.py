@@ -4,7 +4,8 @@
 Number Guessing Game - A Roadmap.sh Backend skill development project
 """
 
-from utils import select_difficulty_and_start
+# from utils import select_difficulty_and_start
+from utils import play_choice, select_difficulty_and_start
 
 
 def main():
@@ -12,24 +13,16 @@ def main():
     Main function to start the game
     """
 
-    game_rules = """
-Welcome to the Number Guessing Game!
-I'm thinking of a number between 1 and 100.
-You have 5 chances to guess the correct number.
-    
-Please select the difficulty level:
-1. Easy (10 chances)
-2. Medium (5 chances)
-3. Hard (3 chances)    
-"""
+    print("Welcome to the Number Guessing Game!!")
 
-    print(game_rules)
+    if not play_choice("Press 1 to play, 0 to quit: "):  return
 
     while True:
         select_difficulty_and_start()
-        play_again = input("\nDo you want to play again? Yes / No: ").strip().lower()
-        if play_again != 'yes':
-            print("\nThanks for playing Goodbye")
+        play_again = play_choice("Do you want to play again? Press 1 to play, 0 to quit:  ")
+
+        if not play_again:
+            print("\nThanks for playing the game. Goodbye :)")
             break
 
 
