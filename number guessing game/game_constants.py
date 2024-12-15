@@ -13,3 +13,15 @@ CHANCES = {
     'Medium': 5,
     'Hard': 3
 }
+
+SCORES_PER_DIFFICULTY = {
+    'Easy': 50,
+    'Medium': 75,
+    'Hard': 100
+}
+
+BONUS_MULTIPLIERS = {
+    'Easy': 5,
+    'Medium': 10,
+    'Hard': 20
+}
