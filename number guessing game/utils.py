@@ -4,6 +4,7 @@ Utilities Functions for the number guessing game
 import textwrap
 import random
 from game_constants import GAME_LEVELS, CHANCES
+from extension_functions import calculate_user_score
 from typing import List
 
 
@@ -100,6 +101,7 @@ def play_game(level: int, user_custom_range: List[int]):
 
     print(f"Computer guess: {user_custom_guess}")  # remove later, use for debugging
     user_guess_val = 0
+
     while attempts_left > 0:
         # get user guess
         user_guess = get_user_guess()
@@ -109,6 +111,8 @@ def play_game(level: int, user_custom_range: List[int]):
 
         if user_guess == user_custom_guess:
             print(f"Congratulations! You guessed the correct number in {attempts_used} attempts.\n")
+            user_score = calculate_user_score(difficulty, CHANCES[difficulty], attempts_used)
+            print(f"Your score for this {difficulty} level is: {user_score}")
             break
 
         if user_guess < user_custom_guess:
@@ -177,8 +181,8 @@ def select_difficulty_and_start():
     """
     Allows the user to select a difficulty and start the game.
     """
-    custom_range = get_user_custom_range()
     level = select_difficulty()
+    custom_range = get_user_custom_range()
 
     print(level_info(level, custom_range))
     play_game(level, custom_range)
