@@ -125,6 +125,7 @@ function getDifficultyChoice(): int
 /**
  * Display the difficulty level user choose and the amount of chances to guess.
  * @param int $level The chosen difficulty level [1, 2, 3]
+ * @param array $userCustomRange User choice of guessing range.
  * @return void
  */
 function displayUserChoiceAndChances(int $level, array $userCustomRange): void
@@ -170,6 +171,23 @@ function getUserGuess(): int
     }
 }
 
+
+/**
+ * Calculate and return the user's score, add bonus base on the level of difficulty
+ * @param string $gameLevel Level of difficulty
+ * @param int $attempts_used Attempts used to guess the number
+ * @return int User score
+ */
+function calculateScore(string $gameLevel, int $attempts_used): int
+{
+    $maxChances = CHANCES[$gameLevel];
+    $unusedChances = max(0, $maxChances - $attempts_used);
+
+    $bonus = $unusedChances * BONUS_MULTIPLIERS[$gameLevel];
+    return BASE_SCORES[$gameLevel] + $bonus;
+}
+
+
 /**
  * Runs the guessing game logic.
  *
@@ -194,6 +212,11 @@ function runGuessingGame(int $levelOfGame, array $userCustomRange): void
 
         if ($userGuess === $customRange) {
             echo "Congratulations! You guessed the correct number in $attemptsUsed attempts.\n";
+
+            $userScore = calculateScore($gameLevel, $attemptsUsed);
+
+            echo "Your score for this $gameLevel Level is: $userScore" . PHP_EOL;
+
             return;
         }
 
