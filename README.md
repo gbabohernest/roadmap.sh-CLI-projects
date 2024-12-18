@@ -3,6 +3,6 @@ Roadmap.sh Backend skills  CLI projects.
 
 
 
- Name | Description            | Project URL                                       |
-|------|------------------------|---------------------------------------------------|
-|Number guessing game| It is a CLI-based game |  https://roadmap.sh/projects/number-guessing-game |
+| Name                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Project URL                                      |
+|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| Number guessing game | A number guessing game where user is allow to input a custom<br/>range of numbers that will be used as the guessing range and the computer<br/>generates a number from that range of numbers for the user to guess it.<br/>The user is given a limited number of chances to guess the number. If the user<br/>guesses the number correctly, the game will end, and the user will win.<br/>Otherwise, the game will continue until the user runs out of chances.<br/>It is a CLI-based game | https://roadmap.sh/projects/number-guessing-game |
