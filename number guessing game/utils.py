@@ -200,3 +200,6 @@ def select_difficulty_and_start():
 
     print(level_info(level, custom_range))
     play_game(level, custom_range)
+
+    print()
+    display_leaderboard()
