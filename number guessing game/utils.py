@@ -99,7 +99,7 @@ def play_game(level: int, user_custom_range: List[int]):
     attempts_left = CHANCES[difficulty]
     attempts_used = 0
 
-    print(f"Computer guess: {user_custom_guess}")  # remove later, use for debugging
+    # print(f"Computer guess: {user_custom_guess}")  # remove later, use for debugging
     user_guess_val = 0
 
     while attempts_left > 0:
