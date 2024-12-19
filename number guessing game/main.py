@@ -6,6 +6,7 @@ Number Guessing Game - A Roadmap.sh Backend skill development project
 
 # from utils import select_difficulty_and_start
 from utils import play_choice, select_difficulty_and_start
+from extension_functions import display_leaderboard
 
 
 def main():
@@ -15,7 +16,9 @@ def main():
 
     print("Welcome to the Number Guessing Game!!")
 
-    if not play_choice("Press 1 to play, 0 to quit: "):  return
+    display_leaderboard()
+
+    if not play_choice("\nPress 1 to play, 0 to quit: "):  return
 
     while True:
         select_difficulty_and_start()
