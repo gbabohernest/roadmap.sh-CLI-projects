@@ -26,6 +26,35 @@ def load_high_scores(file_name: str) -> dict:
         return json.load(file_obj)
 
 
+def update_high_scores(player_name: str, score: int):
+    """
+    Update the high scores with the player's score.
+
+    :param player_name: Name of the player
+    :param score: Score the player got.
+    """
+    high_scores = load_high_scores(HIGH_SCORES_FILE)
+
+    if player_name in high_scores:
+        if score > high_scores[player_name]:
+            high_scores[player_name] = score
+
+    else:
+        high_scores[player_name] = score
+
+    save_high_scores(high_scores, HIGH_SCORES_FILE)
+
+
+def save_high_scores(scores: dict, file_name: str):
+    """
+    Save updated score back into the json file.
+    :param file_name:  Name of the json file.
+    :param scores: A dict containing all the scores
+    """
+    with open(file_name, 'w', encoding='utf-8') as fd:
+        json.dump(scores, fd, indent=2)
+
+
 def calculate_user_score(difficulty: str, max_chances: int, attempts_used: int) -> int:
     """
     Calculates & return user's score based on difficulty level.
