@@ -25,3 +25,5 @@ BONUS_MULTIPLIERS = {
     'Medium': 10,
     'Hard': 20
 }
+
+HIGH_SCORES_FILE = "high_scores.json"
