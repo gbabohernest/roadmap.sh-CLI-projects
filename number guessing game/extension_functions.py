@@ -55,6 +55,26 @@ def save_high_scores(scores: dict, file_name: str):
         json.dump(scores, fd, indent=2)
 
 
+def display_leaderboard():
+    """
+    Display the leaderboard sorted by scores in descending order.
+    """
+    high_scores = load_high_scores(HIGH_SCORES_FILE)
+
+    if high_scores != {}:
+        print("\n-------GAME LEADERBOARD-----------")
+        sorted_scores = sorted(high_scores.items(), key=lambda x: x[1], reverse=True)
+
+        for rank, (player, score) in enumerate(sorted_scores, start=1):
+            print(f"{rank}. {player} --  {score}")
+
+        print("---------------------------\n")
+
+    else:
+        # print("Play and your score will be recorded and display")
+        pass
+
+
 def calculate_user_score(difficulty: str, max_chances: int, attempts_used: int) -> int:
     """
     Calculates & return user's score based on difficulty level.
