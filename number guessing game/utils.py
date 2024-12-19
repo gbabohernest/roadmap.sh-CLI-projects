@@ -4,7 +4,7 @@ Utilities Functions for the number guessing game
 import textwrap
 import random
 from game_constants import GAME_LEVELS, CHANCES
-from extension_functions import calculate_user_score
+from extension_functions import *
 from typing import List
 
 
@@ -112,7 +112,21 @@ def play_game(level: int, user_custom_range: List[int]):
         if user_guess == user_custom_guess:
             print(f"Congratulations! You guessed the correct number in {attempts_used} attempts.\n")
             user_score = calculate_user_score(difficulty, CHANCES[difficulty], attempts_used)
-            print(f"Your score for this {difficulty} level is: {user_score}")
+
+            while True:
+                try:
+                    player_name = input('Enter your name to save your score: ').strip()
+                    if player_name.isalpha():
+                        update_high_scores(player_name, user_score)
+                        print(f"Your score for this {difficulty} level is: {user_score}")
+                        break
+
+                    else:
+                        print('Invalid: Please enter only letters')
+
+                except ValueError:
+                    pass
+
             break
 
         if user_guess < user_custom_guess:
