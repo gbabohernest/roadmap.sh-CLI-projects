@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 
 require_once 'game_constants.php';
+require_once 'scores_functions.php';
 
 
 /**
@@ -214,6 +215,23 @@ function runGuessingGame(int $levelOfGame, array $userCustomRange): void
             echo "Congratulations! You guessed the correct number in $attemptsUsed attempts.\n";
 
             $userScore = calculateScore($gameLevel, $attemptsUsed);
+
+
+            while (true) {
+                echo "Please enter your name: ";
+//                fscanf(STDIN, "%s", $userName);
+                $userName = trim(fgets(STDIN));
+                if (!is_numeric($userName)) {
+
+                    updateHighScores($userName, $userScore);
+                    break;
+                }
+
+                echo "Invalid, Please enter a valid name.";
+
+                $playGame = handlePlayChoice("\nPress 0 to quit the game or 1 to try again: ");
+                if (!$playGame) die();
+            }
 
             echo "Your score for this $gameLevel Level is: $userScore" . PHP_EOL;
 
