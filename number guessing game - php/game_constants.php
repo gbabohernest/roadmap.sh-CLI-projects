@@ -26,4 +26,5 @@ const BONUS_MULTIPLIERS = [
     'Hard' => 20
 ];
 
+const HIGH_SCORES = 'high_scores.json';
 
