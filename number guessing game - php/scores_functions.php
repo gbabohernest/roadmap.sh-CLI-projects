@@ -59,3 +59,22 @@ function updateHighScores(string $playerName, int $score): void
     saveHighScores($highScores, HIGH_SCORES);
 
 }
+
+/**
+ * Displays the high scores' leaderboard.
+ *
+ * @return void
+ */
+
+function displayHighScores(): void
+{
+    $highScores = loadHighScores(HIGH_SCORES);
+
+    if ($highScores !== []) {
+        echo "\n---- Game LeaderBoard ----\n---- High Scores ----\n";
+
+        foreach ($highScores as $name => $score) {
+            echo "$name: $score points" . PHP_EOL;
+        }
+    }
+}
