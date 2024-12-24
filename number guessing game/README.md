@@ -2,6 +2,8 @@
 
 This is a **CLI-based application** developed as part of the [roadmap.sh](https://roadmap.sh/projects/number-guessing-game) backend skills development project
 
+Check out the [project url here](https://roadmap.sh/projects/number-guessing-game)
+
 
 ### Features
 
@@ -51,7 +53,7 @@ This is a **CLI-based application** developed as part of the [roadmap.sh](https:
 
 1. When prompted, choose to play or quit.
 2. Select a difficulty level (Easy, Medium, Hard).
-3. Specify a range of numbers (eg. 1 to 100).
+3. Specify a range of numbers (eg: 1 to 100).
 4. Guess the number within the allowed chances.
 5. Scores are calculated and saved based on your performance.
 6. View the leaderboard at the end of the game.
