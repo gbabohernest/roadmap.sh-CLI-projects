@@ -9,7 +9,6 @@ Usage:
 Run the script and interact with the CLI commands.
 """
 
-
 import os
 import json
 import cmd
@@ -30,7 +29,6 @@ class TaskTrackerCLI(cmd.Cmd):
         super().__init__()
         self.tasks = self.load_tasks()
 
-
     def load_tasks(self) -> dict:
         """
         Loads tasks from JSON file if it exists.
@@ -39,7 +37,7 @@ class TaskTrackerCLI(cmd.Cmd):
 
         if os.path.exists(self.file_path):
             try:
-                with open(self.file_path, 'r', encoding='utf-8')as fp:
+                with open(self.file_path, 'r', encoding='utf-8') as fp:
                     return json.load(fp)
 
             except (FileNotFoundError, json.JSONDecodeError):
@@ -47,3 +45,18 @@ class TaskTrackerCLI(cmd.Cmd):
 
         return {}
 
+    def do_exit(self, arg) -> bool:
+        """
+        Command to exits the application.
+        Usage: exit
+        """
+        print('Goodbye.Thanks for checking out the Application.')
+        return True
+
+    def do_EOF(self, arg) -> bool:
+        """
+        Command to exits the application when EOF signal is received.
+        Usage: EOF (Ctrl+D)
+        """
+        print("")
+        return True
