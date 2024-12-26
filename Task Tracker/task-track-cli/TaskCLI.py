@@ -33,7 +33,7 @@ class TaskTrackerCLI(cmd.Cmd):
 
     def load_tasks(self) -> dict:
         """
-        Loads tasks from JSON file if it exits.
+        Loads tasks from JSON file if it exists.
         :return: A dictionary of tasks with IDs as keys.
         """
 
