@@ -45,6 +45,17 @@ class TaskTrackerCLI(cmd.Cmd):
 
         return {}
 
+    def save_tasks(self):
+        """
+        Save tasks to a JSON file.
+        """
+        try:
+            with open(self.file_path, 'w', encoding='utf-8') as fp:
+                json.dump(self.tasks, fp, index=4)
+
+        except Exception as e:
+            print(f"Error saving tasks: {e}")
+
     def do_exit(self, arg) -> bool:
         """
         Command to exits the application.
