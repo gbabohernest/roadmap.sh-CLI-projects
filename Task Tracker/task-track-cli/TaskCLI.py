@@ -12,6 +12,7 @@ Run the script and interact with the CLI commands.
 import os
 import json
 import cmd
+from dataclasses import dataclass
 from datetime import datetime
 
 
@@ -55,6 +56,38 @@ class TaskTrackerCLI(cmd.Cmd):
 
         except Exception as e:
             print(f"Error saving tasks: {e}")
+
+    def do_add(self, arg):
+        """
+        Command to add a new task.
+        Usage: add <description>
+        :param arg: Task description provided by user.
+        :return:
+        """
+
+        description = arg.strip()
+
+        if not description:
+            print("Error: Task description is required")
+            return
+
+        task_id = len(self.tasks) + 1
+        task = {
+            'id': task_id,
+            'description': description,
+            'status': 'todos',
+            'createdAt': datetime.now().isoformat(),
+            'updatedAt': datetime.now().isoformat()
+        }
+
+        self.tasks[task_id] = task
+
+        try:
+            self.save_tasks()
+            print(f"Task added successfully (ID: {task_id})")
+            return
+        except Exception as e:
+            print(f"Error in saving task: {e}")
 
     def do_exit(self, arg) -> bool:
         """
