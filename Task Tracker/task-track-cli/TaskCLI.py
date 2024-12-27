@@ -29,19 +29,19 @@ class TaskTrackerCLI(cmd.Cmd):
         super().__init__()
         self.tasks = self.load_tasks(self.file_name)
 
-
     def load_tasks(self, file: str) -> dict:
         """
         Loads tasks from JSON file if it exists.
         :param file: Name of the JSON file.
         :return: A dictionary of tasks with task IDS as keys.
         """
+
         if os.path.exists(file):
             try:
                 with open(file, 'r', encoding='utf-8') as fp:
                     return json.load(fp)
-            except (FileNotFoundError, json.JSONDecodeError):
-                print("Error loading tasks. Starting with an empty task list")
+            except json.JSONDecodeError:
+                print("Error loading tasks: Corrupted JSON. Starting with an empty task list")
 
         return {}
 
@@ -88,7 +88,6 @@ class TaskTrackerCLI(cmd.Cmd):
             return
         except Exception as e:
             print(f"Error in saving task: {e}")
-
 
     def do_exit(self, arg) -> bool:
         """
