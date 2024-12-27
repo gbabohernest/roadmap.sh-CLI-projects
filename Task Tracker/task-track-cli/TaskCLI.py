@@ -12,7 +12,6 @@ Run the script and interact with the CLI commands.
 import os
 import json
 import cmd
-from dataclasses import dataclass
 from datetime import datetime
 
 
@@ -24,48 +23,49 @@ class TaskTrackerCLI(cmd.Cmd):
 
     intro = 'Welcome to TaskTracker CLI Application.\nType help or ? to list commands.\n'
     prompt = 'task-cli -> '
-    file_path = 'tasks.json'
+    file_name = 'tasks.json'
 
     def __init__(self):
         super().__init__()
-        self.tasks = self.load_tasks()
+        self.tasks = self.load_tasks(self.file_name)
 
-    def load_tasks(self) -> dict:
+
+    def load_tasks(self, file: str) -> dict:
         """
         Loads tasks from JSON file if it exists.
-        :return: A dictionary of tasks with IDs as keys.
+        :param file: Name of the JSON file.
+        :return: A dictionary of tasks with task IDS as keys.
         """
-
-        if os.path.exists(self.file_path):
+        if os.path.exists(file):
             try:
-                with open(self.file_path, 'r', encoding='utf-8') as fp:
+                with open(file, 'r', encoding='utf-8') as fp:
                     return json.load(fp)
-
             except (FileNotFoundError, json.JSONDecodeError):
                 print("Error loading tasks. Starting with an empty task list")
 
         return {}
 
-    def save_tasks(self):
+    def save_tasks(self, json_file: str, tasks: dict):
         """
         Save tasks to a JSON file.
+        :param json_file: File to save our tasks.
+        :param tasks: Tasks to be saved.
         """
         try:
-            with open(self.file_path, 'w', encoding='utf-8') as fp:
-                json.dump(self.tasks, fp, index=4)
+            with open(json_file, 'w', encoding='utf-8') as fp:
+                json.dump(tasks, fp, indent=4)
 
         except Exception as e:
             print(f"Error saving tasks: {e}")
 
-    def do_add(self, arg):
+    def do_add(self, args: str):
         """
         Command to add a new task.
         Usage: add <description>
-        :param arg: Task description provided by user.
-        :return:
+        :param args: Task description provided by user.
         """
 
-        description = arg.strip()
+        description = args.strip()
 
         if not description:
             print("Error: Task description is required")
@@ -75,7 +75,7 @@ class TaskTrackerCLI(cmd.Cmd):
         task = {
             'id': task_id,
             'description': description,
-            'status': 'todos',
+            'status': 'todo',
             'createdAt': datetime.now().isoformat(),
             'updatedAt': datetime.now().isoformat()
         }
@@ -83,11 +83,12 @@ class TaskTrackerCLI(cmd.Cmd):
         self.tasks[task_id] = task
 
         try:
-            self.save_tasks()
+            self.save_tasks(self.file_name, self.tasks)
             print(f"Task added successfully (ID: {task_id})")
             return
         except Exception as e:
             print(f"Error in saving task: {e}")
+
 
     def do_exit(self, arg) -> bool:
         """
