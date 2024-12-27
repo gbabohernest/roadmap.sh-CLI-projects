@@ -71,14 +71,20 @@ class TaskTrackerCLI(cmd.Cmd):
             print("Error: Task description is required")
             return
 
-        task_id = max(self.tasks.keys(), default=0) + 1 if self.tasks else 1
+        # validate task description to prevent duplication
+        for task in self.tasks.values():
+            if task['description'].lower() == description.lower():
+                print("Cannot add task, task already exists")
+                return
+
+        task_id = max(map(int, self.tasks.keys()), default=0) + 1 if self.tasks else 1
 
         task = {
             'id': task_id,
             'description': description,
             'status': 'todo',
             'createdAt': datetime.now().strftime('%Y-%m-%d  %H:%M:%S'),
-            'updatedAt': datetime.now().strftime('%Y-%m-$%d  %H:%M:%S')
+            'updatedAt': datetime.now().strftime('%Y-%m-%d  %H:%M:%S')
         }
 
         self.tasks[task_id] = task
