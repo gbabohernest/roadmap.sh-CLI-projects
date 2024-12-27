@@ -72,10 +72,7 @@ class TaskTrackerCLI(cmd.Cmd):
             return
 
         # validate task description to prevent duplication
-        for task in self.tasks.values():
-            if task['description'].lower() == description.lower():
-                print("Cannot add task, task already exists")
-                return
+        if not self.validate_task_description(self.tasks, description): return
 
         task_id = max(map(int, self.tasks.keys()), default=0) + 1 if self.tasks else 1
 
@@ -110,4 +107,20 @@ class TaskTrackerCLI(cmd.Cmd):
         Usage: EOF (Ctrl+D)
         """
         print("")
+        return True
+
+    def validate_task_description(self, tasks: dict, des: str) -> bool:
+        """
+        Validates duplicate task descriptions for better task tracking.
+        :param tasks: A dictionary of tasks.
+        :param des: Description of task to validate.
+        :return: Boolean, True on success, False on failure.
+        """
+
+        if tasks and des:
+            for task in tasks.values():
+                if task['description'].lower() == des.lower():
+                    print("Cannot add task, task already exists")
+                    return False
+
         return True
