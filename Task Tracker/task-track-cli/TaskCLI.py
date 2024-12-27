@@ -71,13 +71,14 @@ class TaskTrackerCLI(cmd.Cmd):
             print("Error: Task description is required")
             return
 
-        task_id = len(self.tasks) + 1
+        task_id = max(self.tasks.keys(), default=0) + 1 if self.tasks else 1
+
         task = {
             'id': task_id,
             'description': description,
             'status': 'todo',
-            'createdAt': datetime.now().isoformat(),
-            'updatedAt': datetime.now().isoformat()
+            'createdAt': datetime.now().strftime('%Y-%m-%d  %H:%M:%S'),
+            'updatedAt': datetime.now().strftime('%Y-%m-$%d  %H:%M:%S')
         }
 
         self.tasks[task_id] = task
