@@ -13,6 +13,7 @@ import os
 import json
 import cmd
 from datetime import datetime
+from xmlrpc.client import DateTime
 
 
 class TaskTrackerCLI(cmd.Cmd):
@@ -58,14 +59,64 @@ class TaskTrackerCLI(cmd.Cmd):
         except Exception as e:
             print(f"Error saving tasks: {e}")
 
-    def do_add(self, args: str):
+    def do_update(self, args: str):
+        """
+        Command to update a task.
+        Usage: update <task_id> <description>
+
+        :param args: A single string containing the task ID and new description.
+        :return:
+        """
+
+        if not args.strip():
+            print("Error: Task ID and description are required")
+            return
+
+        parts = args.split(maxsplit=1)
+
+        if len(parts) != 2:
+            print("Error: Task ID & description are required\nUsage: update <task_id> <description>")
+            return
+
+        if parts[1].strip().startswith(('', "")) and len(parts[1].strip()) < 3:
+            print("Error: Description cannot be empty.")
+            return
+
+        task_id, description = parts[0].strip(), parts[1].strip()
+
+        # Load the tasks
+        if not self.tasks:
+            print("Error, No tasks available to update.")
+            return
+
+        # validate task ID
+        if task_id not in self.tasks:
+            print("Error: Invalid task ID.")
+            return
+
+        if not self.validate_task_description(self.tasks, description,
+                                              'No update: The new description is identical to the current one.'): return
+
+        # Perform update
+        self.tasks[task_id]['description'] = description
+        self.tasks[task_id]['updatedAt'] = datetime.now().strftime('%Y-%m-%d  %H:%M:%S')
+
+        # save updated task
+        try:
+            self.save_tasks(self.file_name, self.tasks)
+            print(f"Task ID {task_id} updated successfully")
+
+        except Exception as e:
+            print(f"Error saving updated task. {e}")
+
+    def do_add(self, arg: str):
         """
         Command to add a new task.
         Usage: add <description>
-        :param args: Task description provided by user.
+        :param arg: Task description provided by user.
         """
 
-        description = args.strip()
+        description = arg.strip()
 
         if not description:
             print("Error: Task description is required")
@@ -109,18 +160,19 @@ class TaskTrackerCLI(cmd.Cmd):
         print("")
         return True
 
-    def validate_task_description(self, tasks: dict, des: str) -> bool:
+    def validate_task_description(self, tasks: dict, des: str, msg="") -> bool:
         """
         Validates duplicate task descriptions for better task tracking.
         :param tasks: A dictionary of tasks.
         :param des: Description of task to validate.
+        :param msg: Error message to be displayed.
         :return: Boolean, True on success, False on failure.
         """
 
         if tasks and des:
             for task in tasks.values():
                 if task['description'].lower() == des.lower():
-                    print("Cannot add task, task already exists")
+                    print("Cannot add task, task already exists") if not msg else print(msg)
                     return False
 
         return True
