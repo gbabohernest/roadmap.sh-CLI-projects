@@ -59,6 +59,38 @@ class TaskTrackerCLI(cmd.Cmd):
         except Exception as e:
             print(f"Error saving tasks: {e}")
 
+    def do_delete(self, arg: str):
+        """
+        Command to delete a task.
+        Usage: delete <task_ID>
+        :param arg: ID of the task to delete.
+        """
+
+        task_id = arg.strip()
+
+        if not task_id:
+            print("Error: Please provide the ID of the task.\nUsage: delete <task_ID>.")
+            return
+
+        # load tasks
+        if not self.tasks:
+            print("Error: No tasks available to delete. Add tasks.")
+            return
+
+        if task_id not in self.tasks:
+            print("Error: Invalid task ID. Please enter a valid ID.")
+            return
+
+        # delete task
+        self.tasks.pop(task_id)
+
+        try:
+            self.save_tasks(self.file_name, self.tasks)
+            print(f"Success: Task ID {task_id} deleted successfully")
+
+        except Exception as e:
+            print(f"Error deleting task. {e}")
+
     def do_update(self, args: str):
         """
         Command to update a task.
