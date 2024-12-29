@@ -59,6 +59,37 @@ class TaskTrackerCLI(cmd.Cmd):
         except Exception as e:
             print(f"Error saving tasks: {e}")
 
+    def do_mark_in_progress(self, arg):
+        """
+        Command to mark task status (in-progress)
+        :param arg: Task ID.
+        """
+
+        task_id = arg.strip()
+
+        if not task_id:
+            print("Error: Please provide the ID of the task.\nUsage: mark-in-progress <task_ID>.")
+            return
+
+        # load tasks
+        if not self.tasks:
+            print("Error: No tasks available to mark status. Add tasks.")
+            return
+
+        if task_id not in self.tasks:
+            print("Error: Invalid task ID. Please enter a valid ID.")
+            return
+
+        # mark task as in progress
+        self.tasks[task_id]['status'] = 'in-progress'
+
+        try:
+            self.save_tasks(self.file_name, self.tasks)
+            print(f"Success: Task with ID {task_id} status marked as in-progress")
+
+        except Exception as e:
+            print(f"Error marking the status. {e}")
+
     def do_delete(self, arg: str):
         """
         Command to delete a task.
