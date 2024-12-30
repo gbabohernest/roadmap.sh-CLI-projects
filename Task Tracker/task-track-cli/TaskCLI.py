@@ -13,7 +13,7 @@ import os
 import json
 import cmd
 from datetime import datetime
-from xmlrpc.client import DateTime
+from itertools import takewhile
 
 
 class TaskTrackerCLI(cmd.Cmd):
@@ -62,6 +62,7 @@ class TaskTrackerCLI(cmd.Cmd):
     def do_mark_in_progress(self, arg):
         """
         Command to mark task status (in-progress)
+        Usage: mark_in_progress <task_id>
         :param arg: Task ID.
         """
 
@@ -237,5 +238,35 @@ class TaskTrackerCLI(cmd.Cmd):
                 if task['description'].lower() == des.lower():
                     print("Cannot add task, task already exists") if not msg else print(msg)
                     return False
+
+        return True
+
+    def validate_task_id(self, task_id: str, tasks: dict) -> bool:
+        """
+         Validates the task ID provided by the user.
+
+         This function checks whether the given task ID is valid for operations such as marking
+         a task's status.
+
+         :param task_id: The ID of the task as a string.
+         :param tasks: A dictionary containing existing tasks with task IDs as keys.
+         :return:
+             - True if the task ID is valid and exists in the task dictionary.
+             - False if any validation step fails, with an appropriate error message.
+         """
+
+        task_id = task_id.strip()
+
+        if not task_id:
+            print("Error: Please provide the ID of the task.\n Usage: command <task_ID>.")
+            return False
+
+        if not tasks:
+            print("Error: No tasks available to mark status. Add tasks")
+            return False
+
+        if task_id not in tasks:
+            print("Error: Invalid task ID. Please enter a valid ID.")
+            return False
 
         return True
