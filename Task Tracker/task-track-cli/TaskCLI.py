@@ -71,12 +71,8 @@ class TaskTrackerCLI(cmd.Cmd):
         # mark task as done
         self.tasks[task_id]['status'] = 'done'
 
-        try:
-            self.save_tasks(self.file_name, self.tasks)
-            print(f"Success: Task with ID {task_id} status marked as done.")
-
-        except Exception as e:
-            print(f"Error marking the status. {e}")
+        # save changes to task back into the file.
+        self.save_task_operations(task_id, 'status marked as done')
 
     def do_mark_in_progress(self, arg: str):
         """
@@ -92,12 +88,8 @@ class TaskTrackerCLI(cmd.Cmd):
         # mark task as in progress
         self.tasks[task_id]['status'] = 'in-progress'
 
-        try:
-            self.save_tasks(self.file_name, self.tasks)
-            print(f"Success: Task with ID {task_id} status marked as in-progress")
-
-        except Exception as e:
-            print(f"Error marking the status. {e}")
+        # save changes to task back into the file.
+        self.save_task_operations(task_id, 'status marked as in-progress')
 
     def do_delete(self, arg: str):
         """
@@ -113,12 +105,8 @@ class TaskTrackerCLI(cmd.Cmd):
         # delete task
         self.tasks.pop(task_id)
 
-        try:
-            self.save_tasks(self.file_name, self.tasks)
-            print(f"Success: Task ID {task_id} deleted successfully")
-
-        except Exception as e:
-            print(f"Error deleting task. {e}")
+        # save changes to task back into the file.
+        self.save_task_operations(task_id, 'deleted successfully')
 
     def do_update(self, args: str):
         """
@@ -163,12 +151,7 @@ class TaskTrackerCLI(cmd.Cmd):
         self.tasks[task_id]['updatedAt'] = datetime.now().strftime('%Y-%m-%d  %H:%M:%S')
 
         # save updated task
-        try:
-            self.save_tasks(self.file_name, self.tasks)
-            print(f"Task ID {task_id} updated successfully")
-
-        except Exception as e:
-            print(f"Error saving updated task. {e}")
+        self.save_task_operations(task_id, 'updated successfully')
 
     def do_add(self, arg: str):
         """
@@ -198,12 +181,8 @@ class TaskTrackerCLI(cmd.Cmd):
 
         self.tasks[task_id] = task
 
-        try:
-            self.save_tasks(self.file_name, self.tasks)
-            print(f"Task added successfully (ID: {task_id})")
-            return
-        except Exception as e:
-            print(f"Error in saving task: {e}")
+        # save task
+        self.save_task_operations(str(task_id), 'added successfully.')
 
     def do_exit(self, arg) -> bool:
         """
@@ -268,3 +247,17 @@ class TaskTrackerCLI(cmd.Cmd):
             return False
 
         return True
+
+    def save_task_operations(self, task_id: str, msg: str):
+        """
+         Saves changes to a task into the JSON file and displays a status message.
+        :param task_id: The ID of the task being modified.
+        :param msg: A success message describing the operation performed.
+        """
+
+        try:
+            self.save_tasks(self.file_name, self.tasks)
+            print(f"Success: Task with ID {task_id} {msg}.")
+
+        except Exception as e:
+            print(f"Error marking the status. {e}")
