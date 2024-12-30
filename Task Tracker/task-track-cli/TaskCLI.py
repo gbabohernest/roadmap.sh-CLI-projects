@@ -59,7 +59,27 @@ class TaskTrackerCLI(cmd.Cmd):
         except Exception as e:
             print(f"Error saving tasks: {e}")
 
-    def do_mark_in_progress(self, arg):
+    def do_mark_done(self, arg: str):
+        """
+        Command to mark task status (done)
+        Usage: mark_done <task_id>
+        :param arg: Task ID
+        """
+        if not self.validate_task_id(arg, self.tasks): return
+
+        task_id = arg.strip()
+
+        # mark task as done
+        self.tasks[task_id]['status'] = 'done'
+
+        try:
+            self.save_tasks(self.file_name, self.tasks)
+            print(f"Success: Task with ID {task_id} status marked as done.")
+
+        except Exception as e:
+            print(f"Error marking the status. {e}")
+
+    def do_mark_in_progress(self, arg: str):
         """
         Command to mark task status (in-progress)
         Usage: mark_in_progress <task_id>
