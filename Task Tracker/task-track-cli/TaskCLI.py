@@ -13,7 +13,6 @@ import os
 import json
 import cmd
 from datetime import datetime
-from itertools import takewhile
 
 
 class TaskTrackerCLI(cmd.Cmd):
@@ -65,7 +64,7 @@ class TaskTrackerCLI(cmd.Cmd):
         Usage: mark_done <task_id>
         :param arg: Task ID
         """
-        if not self.validate_task_id(arg, self.tasks): return
+        if not self.validate_task_id(arg, self.tasks, 'mark-done'): return
 
         task_id = arg.strip()
 
@@ -86,20 +85,9 @@ class TaskTrackerCLI(cmd.Cmd):
         :param arg: Task ID.
         """
 
+        if not self.validate_task_id(arg, self.tasks, 'mark-in-progress'): return
+
         task_id = arg.strip()
-
-        if not task_id:
-            print("Error: Please provide the ID of the task.\nUsage: mark-in-progress <task_ID>.")
-            return
-
-        # load tasks
-        if not self.tasks:
-            print("Error: No tasks available to mark status. Add tasks.")
-            return
-
-        if task_id not in self.tasks:
-            print("Error: Invalid task ID. Please enter a valid ID.")
-            return
 
         # mark task as in progress
         self.tasks[task_id]['status'] = 'in-progress'
@@ -118,20 +106,9 @@ class TaskTrackerCLI(cmd.Cmd):
         :param arg: ID of the task to delete.
         """
 
+        if not self.validate_task_id(arg, self.tasks, 'delete'): return
+
         task_id = arg.strip()
-
-        if not task_id:
-            print("Error: Please provide the ID of the task.\nUsage: delete <task_ID>.")
-            return
-
-        # load tasks
-        if not self.tasks:
-            print("Error: No tasks available to delete. Add tasks.")
-            return
-
-        if task_id not in self.tasks:
-            print("Error: Invalid task ID. Please enter a valid ID.")
-            return
 
         # delete task
         self.tasks.pop(task_id)
@@ -261,7 +238,7 @@ class TaskTrackerCLI(cmd.Cmd):
 
         return True
 
-    def validate_task_id(self, task_id: str, tasks: dict) -> bool:
+    def validate_task_id(self, task_id: str, tasks: dict, command: str) -> bool:
         """
          Validates the task ID provided by the user.
 
@@ -270,6 +247,7 @@ class TaskTrackerCLI(cmd.Cmd):
 
          :param task_id: The ID of the task as a string.
          :param tasks: A dictionary containing existing tasks with task IDs as keys.
+         :param command: A string denoting the command's name
          :return:
              - True if the task ID is valid and exists in the task dictionary.
              - False if any validation step fails, with an appropriate error message.
@@ -278,7 +256,7 @@ class TaskTrackerCLI(cmd.Cmd):
         task_id = task_id.strip()
 
         if not task_id:
-            print("Error: Please provide the ID of the task.\n Usage: command <task_ID>.")
+            print(f"Error: Please provide the ID of the task.\nUsage: {command} <task_ID>.")
             return False
 
         if not tasks:
