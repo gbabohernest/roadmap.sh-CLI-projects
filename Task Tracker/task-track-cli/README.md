@@ -3,7 +3,7 @@
 TaskTracker CLI is a Python-based command-line application designed to manage tasks efficiently. It allows users to add,
 list, update, and delete tasks, with all tasks stored in a JSON file for persistence. 
 
-Check out the [project here](https://roadmap.sh/projects/task-tracker)
+Check out the [project here](https://roadmap.sh/projects/task-tracker) (https://roadmap.sh/projects/task-tracker)
 
 
 ## Features
