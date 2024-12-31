@@ -112,3 +112,7 @@ Example
 
 
 Thank you for using TaskTrackerCLI!! 😊
+
+
+### CLI Interface 
+![CLI Screenshot](cli-interface.png)
