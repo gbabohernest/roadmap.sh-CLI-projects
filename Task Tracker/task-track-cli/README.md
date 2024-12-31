@@ -41,9 +41,9 @@ Run the application with:
 
 1. `Add a Task`
     ```bash
-        add <description>
+    add <description>
     
-        add Buy Groceries 
+    add Buy Groceries 
     ```
 2. `List Tasks`
     ```bash
@@ -73,8 +73,8 @@ Run the application with:
 
 5. `Exit the Application`
   ```bash
-     exit 
-```
+  exit 
+  ```
 
 #### Advanced Usage
 
@@ -87,15 +87,15 @@ Run the application with:
 
 Example
 ```bash
-    list done
-    list in_progress
+  list done
+  list in_progress
 ```
 
 
 **Mark Task as Completed**
 
 ```bash
-    mark_done 1
+  mark_done 1
 ```
 
 
