@@ -65,14 +65,13 @@ Run the application with:
 4. `Delete a Task`
 
     ```bash
-        delete <task_id>
+    delete <task_id>
 
     Example
     delete 1
    ```
 
 5. `Exit the Application`
-    Exit the CLI.
   ```bash
      exit 
 ```
@@ -80,7 +79,8 @@ Run the application with:
 #### Advanced Usage
 
 **Filter Tasks by Status**
-Supported statuses include:
+
+`Statuses:`
 - `todo`
 - `in-progress`
 - `done`
@@ -93,7 +93,7 @@ Example
 
 
 **Mark Task as Completed**
-Use the mark_done command to change the status of a task to done.
+
 ```bash
     mark_done 1
 ```
