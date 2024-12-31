@@ -39,39 +39,37 @@ Run the application with:
 
 **Commands**
 
-1. `**Add a Task**`
-Add a new task with a description
+1. `Add a Task`
     ```bash
         add <description>
-
-        Example
+    
         add Buy Groceries 
-
+    ```
 2. `List Tasks`
-List all tasks or filter them by status.
     ```bash
     list
     list <status>
 
-    Example
     list
     list todo
+   ```
 
 3. `Update a Task`
-Update a task's description or mark its status.
     ```bash
     update <task_id> <description>
 
     Example
     update 1 Complete the assignment.
-
+    ```
+   
 4. `Delete a Task`
-Delete a task by its ID.
+
     ```bash
         delete <task_id>
 
     Example
     delete 1
+   ```
 
 5. `Exit the Application`
     Exit the CLI.
