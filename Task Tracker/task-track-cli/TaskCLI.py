@@ -60,25 +60,30 @@ class TaskTrackerCLI(cmd.Cmd):
 
     def do_list(self, arg):
         """
-        Command to list all tasks.
-        Usage: list
-        :param arg: Should be empty, as this command does not take arguments.
+        Command to list all tasks, optionally filtered by status.
+        Usage:
+        - list                 # Lists all tasks.
+        - list <status>        # Lists tasks filtered by status.
+                               # Valid statuses: todo, in-progress, done.
+        :param arg: The status to filter tasks by, or empty to list all tasks.
         """
+
         if arg:
-            print("Error: The 'list' command tasks no argument\nUsage: list")
-            return
+            arg = arg.strip().lower()
 
-        if not self.tasks:
-            print("Sorry no tasks to load. Try adding a task.")
-            return
+            valid_statuses = {'done': 'done', 'todo': 'todo', 'in_progress': 'in-progress'}
+            status = valid_statuses.get(arg)
 
-        print(f"{'Task ID':<10} {'Description':<30} {'Status':<20} {'Created At':<30} {'Updated At':<30}")
-        print("=" * 130)
+            if status:
+                if not self.retrieve_tasks_list(status): return
 
-        for key, value in self.tasks.items():
-            print(
-                f"{key:<10} {value['description']:<30} {value['status']:<20}"
-                f"{value['createdAt']:<30} {value['updatedAt']:<30}")
+            else:
+                print("Error: Invalid status provided.\nUsage: list <done>\nlist <in_progress>\nlist <todo>")
+                return
+
+        else:
+            # List all tasks.
+            if not self.retrieve_tasks_list(): return
 
     def do_mark_done(self, arg: str):
         """
@@ -283,3 +288,34 @@ class TaskTrackerCLI(cmd.Cmd):
 
         except Exception as e:
             print(f"Error marking the status. {e}")
+
+    def retrieve_tasks_list(self, ops="") -> bool:
+        """
+       Retrieves and displays tasks, optionally filtered by status.
+
+       :param ops: The status to filter tasks by (e.g., "done", "todo", "in-progress").
+                   If empty, all tasks are listed.
+
+       :returns bool: True if tasks are successfully listed, False otherwise.
+        """
+
+        if not self.tasks:
+            print("Sorry no tasks to load. Try adding a task.")
+            return False
+
+        # filter task based on `ops` if provided.
+        filtered_tasks = {k: v for k, v in self.tasks.items() if not ops or v['status'] == ops}
+
+        if not filtered_tasks:
+            print(f"No tasks found with status `{ops}`")
+            return False
+
+        print(f"{'Task ID':<10} {'Description':<30} {'Status':<20} {'Created At':<30} {'Updated At':<30}")
+        print("=" * 130)
+
+        for key, value in filtered_tasks.items():
+            print(
+                f"{key:<10} {value['description']:<30} {value['status']:<20}"
+                f"{value['createdAt']:<30} {value['updatedAt']:<30}")
+
+        return True
