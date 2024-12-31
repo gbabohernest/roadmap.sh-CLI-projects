@@ -58,6 +58,28 @@ class TaskTrackerCLI(cmd.Cmd):
         except Exception as e:
             print(f"Error saving tasks: {e}")
 
+    def do_list(self, arg):
+        """
+        Command to list all tasks.
+        Usage: list
+        :param arg: Should be empty, as this command does not take arguments.
+        """
+        if arg:
+            print("Error: The 'list' command tasks no argument\nUsage: list")
+            return
+
+        if not self.tasks:
+            print("Sorry no tasks to load. Try adding a task.")
+            return
+
+        print(f"{'Task ID':<10} {'Description':<30} {'Status':<20} {'Created At':<30} {'Updated At':<30}")
+        print("=" * 130)
+
+        for key, value in self.tasks.items():
+            print(
+                f"{key:<10} {value['description']:<30} {value['status']:<20}"
+                f"{value['createdAt']:<30} {value['updatedAt']:<30}")
+
     def do_mark_done(self, arg: str):
         """
         Command to mark task status (done)
