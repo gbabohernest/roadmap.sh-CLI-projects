@@ -39,34 +39,34 @@ Run the application with:
 
 **Commands**
 
-1. `Add a Task`
-    Add a new task with a description.
+1. `**Add a Task**`
+Add a new task with a description
     ```bash
-add <description>
+        add <description>
 
-    Example
-    add Buy Groceries 
+        Example
+        add Buy Groceries 
 
 2. `List Tasks`
-    List all tasks or filter them by status.
+List all tasks or filter them by status.
     ```bash
-list
-list <status>
+    list
+    list <status>
 
     Example
     list
     list todo
 
 3. `Update a Task`
-    Update a task's description or mark its status.
+Update a task's description or mark its status.
     ```bash
-update <task_id> <description>
+    update <task_id> <description>
 
     Example
     update 1 Complete the assignment.
 
 4. `Delete a Task`
-    Delete a task by its ID.
+Delete a task by its ID.
     ```bash
         delete <task_id>
 
