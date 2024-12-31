@@ -33,10 +33,12 @@ list, update, and delete tasks, with all tasks stored in a JSON file for persist
 
 ### Usage
 Run the application with:
-
-
+ ```bash
+ python index.py
+```
 
 **Commands**
+
 1. `Add a Task`
     Add a new task with a description.
     ```bash
@@ -75,7 +77,7 @@ update <task_id> <description>
     Exit the CLI.
   ```bash
      exit 
-
+```
 
 #### Advanced Usage
 
@@ -89,16 +91,19 @@ Example
 ```bash
     list done
     list in_progress
+```
+
 
 **Mark Task as Completed**
 Use the mark_done command to change the status of a task to done.
 ```bash
     mark_done 1
+```
 
 
 ### File Details
 - `TaskCLI.py`: Contains the implementation of the TaskTrackerCLI class and all the command handlers and utilities methods.
-- `tasks.json`: Stores all task data persistenly.
+- `tasks.json`: Stores all task data persistently.
 
 
 ### Error Handling
@@ -108,4 +113,4 @@ Use the mark_done command to change the status of a task to done.
 
 
 
-Thank you for using TaskTrackerCLI!! :)
+Thank you for using TaskTrackerCLI!! 😊
