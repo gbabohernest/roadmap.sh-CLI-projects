@@ -34,18 +34,3 @@ Run the application with the following command.
     python index.py  <github-username>
    ```
 
-# Output Example
-    ```bash
-    Recent activity for GitHub user 'ralphjsmit'.
-    -- IssueComment in ralphjsmit/laravel-glide
-    -- PullRequest in spatie/package-skeleton-laravel
-    -- Pushed 1 commits to ralphjsmit/package-skeleton-laravel
-    -- Pushed 1 commits to ralphjsmit/package-skeleton-laravel
-    -- Create in ralphjsmit/package-skeleton-laravel
-    -- Fork in spatie/package-skeleton-laravel
-    -- IssueComment in laravel-idea/plugin
-    --Opened issue '[Bug]: Translation variables not correctly cased' in laravel-idea/plugin
-    -- IssueComment in ralphjsmit/laravel-seo
-    -- PullRequestReviewComment in filamentphp/filamentphp.com
-
-    ```
