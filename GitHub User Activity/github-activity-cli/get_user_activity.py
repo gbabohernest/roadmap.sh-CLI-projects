@@ -42,7 +42,7 @@ def fetch_github_user_activity(username: str):
                 elif event_type == 'IssuesEvent':
                     action = event['payload'].get('action', 'performed an action on')
                     issue = event['payload'].get('issue', {}).get('title', 'an issue')
-                    print(f"--{action.capaitalize()} issue '{issue}' in {repo_name}")
+                    print(f"--{action.capitalize()} issue '{issue}' in {repo_name}")
 
                 elif event_type == 'WatchEvent':
                     print(f"-- Starred {repo_name}")
