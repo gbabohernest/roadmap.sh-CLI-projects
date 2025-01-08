@@ -2,19 +2,18 @@
 This module contains a function that fetches movie function and display it in the terminal
 """
 
-
 import json
-from urllib.request import  urlopen, Request
+from urllib.request import urlopen, Request
 from urllib.error import HTTPError, URLError
-from xml.etree.ElementTree import indent
+from typing import List
 
 
-def fetch_movie_details(movie_type: str, access_token: str):
+def fetch_movies_details(movie_type: str, access_token: str) -> List:
     """
-    Fetches movie information using the TMDB API and display in the terminal.
-    :param movie_type:
-    :param access_token:
-    :return:
+    Fetches movies information using the TMDB API.
+    :param movie_type: The kind of movie to fetch (popular, top-rated, upcoming and now-playing movie)
+    :param access_token: TMDB API access token
+    :return: A list of dict containing movies information.
     """
 
     url = f'https://api.themoviedb.org/3/movie/{movie_type}?language=en-US&page=1'
@@ -29,10 +28,13 @@ def fetch_movie_details(movie_type: str, access_token: str):
         with urlopen(request) as response:
             response_byte = response.read()
             response_data = json.loads(response_byte.decode('utf-8'))
-            print(json.dumps(response_data, indent=4))
+            results = response_data['results']
 
-            # iterate over the data and get the relevant info
+            if not results:
+                print("Opps! Sorry could not fetch movies data.")
+                exit()
 
+            return results
 
     except HTTPError as e:
         if e.code == 401:
@@ -47,7 +49,3 @@ def fetch_movie_details(movie_type: str, access_token: str):
 
     except Exception as e:
         print(f"Unexpected error: {e}")
-
-
-
-
