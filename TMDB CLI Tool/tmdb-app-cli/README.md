@@ -1,7 +1,7 @@
 # TMDB CLI Tool
 
 A simple command line interface (CLI) tool to fetch data from The Movie Database (TMDB) and display it in the terminal.
-It fetches the popular, playing, top and upcoming movies)
+It fetches the (popular, playing, top and upcoming) movies.
 
 
 ## Features
