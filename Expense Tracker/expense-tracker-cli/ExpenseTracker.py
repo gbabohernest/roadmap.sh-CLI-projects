@@ -21,6 +21,47 @@ class ExpenseTracker(cmd.Cmd):
         super().__init__()
         self.expenses = self.load_expenses(self.expenses_file)
 
+    def do_add(self, args: str):
+        """
+        Command to add a new expense
+        Usage: add <description> <amount>
+        :param args:
+        :return:
+        """
+
+        if not args:
+            print('Error: Please provide description and amount')
+            return
+
+        try:
+            des, amount = args.strip().split(maxsplit=1)
+        except ValueError:
+            print("Error, Expense description and amount must be given")
+            return
+
+        if not amount.isnumeric():
+            print('Error: Amount must a number')
+            return
+
+        if not int(amount) > 0:
+            print('Error: Amount must be greater then zero')
+            return
+
+        exp_id = max(map(int, self.expenses.keys()), default=0) + 1 if self.expenses else 1
+
+        expense = {
+            'id': exp_id,
+            'description': des,
+            'amount': amount,
+            'date': datetime.now().strftime('%Y-%m-%d  %H:%M:%S'),
+            'update_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+
+        # add an expense to the expense dictionary
+        self.expenses[exp_id] = expense
+
+        # save expense to the expenses file
+
     def load_expenses(self, file: str) -> dict:
         """
         Loads expenses from storage
