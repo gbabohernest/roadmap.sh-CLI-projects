@@ -21,6 +21,23 @@ class ExpenseTracker(cmd.Cmd):
         super().__init__()
         self.expenses = self.load_expenses(self.expenses_file)
 
+
+    def save_expense(self, filename: str, expense_obj: dict):
+        """
+        Save Expense to a file
+        :param filename:
+        :param expense_obj:
+        :return:
+        """
+
+        try:
+            with open(filename, 'w', encoding='utf-8') as file_obj:
+                json.dump(expense_obj, file_obj, indent=4)
+
+        except Exception as e:
+            print(f"Error saving expense: {e}")
+
+
     def do_add(self, args: str):
         """
         Command to add a new expense
@@ -52,7 +69,7 @@ class ExpenseTracker(cmd.Cmd):
         expense = {
             'id': exp_id,
             'description': des,
-            'amount': amount,
+            'amount': int(amount),
             'date': datetime.now().strftime('%Y-%m-%d  %H:%M:%S'),
             'update_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
@@ -61,6 +78,9 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[exp_id] = expense
 
         # save expense to the expenses file
+        self.save_expense(self.expenses_file, self.expenses)
+
+
 
     def load_expenses(self, file: str) -> dict:
         """
