@@ -30,7 +30,7 @@ class ExpenseTracker(cmd.Cmd):
 
         try:
             self.save_expense(self.expenses_file, self.expenses)
-            print(f"Success: Task with ID {expense_id} {msg}.")
+            print(f"Success: Expense with ID {expense_id} {msg}.")
 
         except Exception as e:
             print(f"Error marking the status. {e}")
