@@ -21,6 +21,19 @@ class ExpenseTracker(cmd.Cmd):
         super().__init__()
         self.expenses = self.load_expenses(self.expenses_file)
 
+    def save_expense_operations(self, expense_id: str, msg: str):
+        """
+         Saves changes to an expense into the JSON file and displays a status message.
+        :param expense_id: The ID of the expense being modified.
+        :param msg: A success message describing the operation performed.
+        """
+
+        try:
+            self.save_expense(self.expenses_file, self.expenses)
+            print(f"Success: Task with ID {expense_id} {msg}.")
+
+        except Exception as e:
+            print(f"Error marking the status. {e}")
 
     def save_expense(self, filename: str, expense_obj: dict):
         """
