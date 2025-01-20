@@ -96,8 +96,8 @@ class ExpenseTracker(cmd.Cmd):
     def load_expenses(self, file: str) -> dict:
         """
         Loads expenses from storage
-        :param file:
-        :return:
+        :param file: file containing expenses.
+        :return: A dict containing expenses or an empty dict
         """
 
         if os.path.exists(file):
