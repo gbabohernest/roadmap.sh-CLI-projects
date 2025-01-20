@@ -38,9 +38,8 @@ class ExpenseTracker(cmd.Cmd):
     def save_expense(self, filename: str, expense_obj: dict):
         """
         Save Expense to a file
-        :param filename:
-        :param expense_obj:
-        :return:
+        :param filename: The name of the file.
+        :param expense_obj: A dict containing expenses.
         """
 
         try:
@@ -56,7 +55,6 @@ class ExpenseTracker(cmd.Cmd):
         Command to add a new expense
         Usage: add <description> <amount>
         :param args:
-        :return:
         """
 
         if not args:
