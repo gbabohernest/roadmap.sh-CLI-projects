@@ -29,13 +29,13 @@ class ExpenseTracker(cmd.Cmd):
         """
 
         try:
-            self.save_expense(self.expenses_file, self.expenses)
+            self.save_expenses(self.expenses_file, self.expenses)
             print(f"Success: Expense with ID {expense_id} {msg}.")
 
         except Exception as e:
             print(f"Error marking the status. {e}")
 
-    def save_expense(self, filename: str, expense_obj: dict):
+    def save_expenses(self, filename: str, expense_obj: dict):
         """
         Save Expense to a file
         :param filename: The name of the file.
@@ -49,49 +49,30 @@ class ExpenseTracker(cmd.Cmd):
         except Exception as e:
             print(f"Error saving expense: {e}")
 
-
-    def do_add(self, args: str):
+    def do_add(self, args):
         """
-        Command to add a new expense
+        Add a new expense.
         Usage: add <description> <amount>
-        :param args:
         """
-
-        if not args:
-            print('Error: Please provide description and amount')
-            return
-
         try:
-            des, amount = args.strip().split(maxsplit=1)
+            description, amount = args.split(maxsplit=1)
+            amount = float(amount)
+            if amount <= 0:
+                raise ValueError("Amount must be greater than zero.")
         except ValueError:
-            print("Error, Expense description and amount must be given")
+            print("Error: Invalid input. Use 'add <description> <amount>'.")
             return
 
-        if not amount.isnumeric():
-            print('Error: Amount must a number')
-            return
-
-        if not int(amount) > 0:
-            print('Error: Amount must be greater then zero')
-            return
-
-        exp_id = max(map(int, self.expenses.keys()), default=0) + 1 if self.expenses else 1
-
+        expense_id = max(map(int, self.expenses.keys()), default=0) + 1 if self.expenses else 1
         expense = {
-            'id': exp_id,
-            'description': des,
-            'amount': int(amount),
-            'date': datetime.now().strftime('%Y-%m-%d  %H:%M:%S'),
-            'update_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            'id': expense_id,
+            'description': description,
+            'amount': amount,
+            'date': datetime.now().strftime('%Y-%m-%d'),
         }
-
-        # add an expense to the expense dictionary
-        self.expenses[exp_id] = expense
-
-        # save expense to the expenses file
-        self.save_expense(self.expenses_file, self.expenses)
-
-
+        self.expenses[str(expense_id)] = expense
+        self.save_expenses()
+        print(f"Expense added successfully (ID: {expense_id}).")
 
     def load_expenses(self, file: str) -> dict:
         """
