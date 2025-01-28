@@ -71,8 +71,9 @@ class ExpenseTracker(cmd.Cmd):
             'date': datetime.now().strftime('%Y-%m-%d'),
         }
         self.expenses[str(expense_id)] = expense
-        self.save_expenses()
-        print(f"Expense added successfully (ID: {expense_id}).")
+        # self.save_expenses()
+        self.save_expense_operations(str(expense_id), 'added successfully')
+        # print(f"Expense added successfully (ID: {expense_id}).")
 
     def load_expenses(self, file: str) -> dict:
         """
