@@ -14,12 +14,58 @@ class ExpenseTracker(cmd.Cmd):
     The command-line interface for tracking expenses.
     """
     intro = 'Welcome to ExpenseTracker CLI Tool.\nType help or ? to list commands.\n'
-    prompt = 'expense-tracker ->'
+    prompt = 'expense-tracker -> '
     expenses_file = 'expenses.json'
 
     def __init__(self):
         super().__init__()
         self.expenses = self.load_expenses(self.expenses_file)
+
+    def do_update(self, args):
+        """
+        Update an existing expense.
+        Usage: update <id> <description> <amount>
+        """
+        try:
+            expense_id, description, amount = args.split(maxsplit=2)
+            expense_id = str(expense_id)
+            amount = float(amount)
+            if expense_id not in self.expenses:
+                raise KeyError("Expense ID not found.")
+            if amount <= 0:
+                raise ValueError("Amount must be greater than zero.")
+        except (ValueError, KeyError):
+            print("Error: Invalid input. Use 'update <id> <description> <amount>'.")
+            return
+
+        self.expenses[expense_id].update({
+            'description': description,
+            'amount': amount,
+            'date': datetime.now().strftime('%Y-%m-%d'),
+        })
+        self.save_expenses()
+        print(f"Expense with ID {expense_id} updated successfully.")
+
+    def do_delete(self, args):
+        """
+        Delete an expense.
+        Usage: delete <id>
+        """
+
+        ## still need working
+        try:
+            expense_id = args.strip()
+            if expense_id:
+                if expense_id not in self.expenses:
+                    raise KeyError("Expense ID not found.")
+        except KeyError:
+            print("Error: Invalid input. Use 'delete <id>'.")
+            return
+
+        del self.expenses[expense_id]
+        # self.save_expenses()
+        self.save_expense_operations(expense_id, 'deleted successfully')
+
 
     def save_expense_operations(self, expense_id: str, msg: str):
         """
