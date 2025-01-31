@@ -50,7 +50,7 @@ class ExpenseTracker(cmd.Cmd):
 
     def do_delete(self, args):
         """
-        Delete an expense.
+        Command to delete an expense.
         Usage: delete <id>
         """
 
