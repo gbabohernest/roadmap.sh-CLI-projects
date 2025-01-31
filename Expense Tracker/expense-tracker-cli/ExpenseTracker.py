@@ -23,9 +23,11 @@ class ExpenseTracker(cmd.Cmd):
 
     def do_update(self, args):
         """
-        Update an existing expense.
+        Command to update an existing expense.
         Usage: update <id> <description> <amount>
         """
+
+
         try:
             expense_id, description, amount = args.split(maxsplit=2)
             expense_id = str(expense_id)
