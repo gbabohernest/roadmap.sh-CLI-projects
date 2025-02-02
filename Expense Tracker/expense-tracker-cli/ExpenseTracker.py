@@ -148,7 +148,7 @@ class ExpenseTracker(cmd.Cmd):
         return True
 
 
-    def do_exit(self, _):
+    def do_exit(self, arg):
         """
         Command Exit the application.
         """
