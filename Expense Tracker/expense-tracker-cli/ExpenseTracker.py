@@ -27,7 +27,6 @@ class ExpenseTracker(cmd.Cmd):
         Usage: update <id> <description> <amount>
         """
 
-
         try:
             expense_id, description, amount = args.split(maxsplit=2)
             expense_id = str(expense_id)
@@ -68,7 +67,6 @@ class ExpenseTracker(cmd.Cmd):
         # self.save_expenses()
         self.save_expense_operations(expense_id, 'deleted successfully')
 
-
     def save_expense_operations(self, expense_id: str, msg: str):
         """
          Saves changes to an expense into the JSON file and displays a status message.
@@ -99,14 +97,14 @@ class ExpenseTracker(cmd.Cmd):
 
     def do_add(self, args):
         """
-        Add a new expense.
+        Command to add a new expense.
         Usage: add <description> <amount>
         """
         try:
             description, amount = args.split(maxsplit=1)
-            amount = float(amount)
-            if amount <= 0:
-                raise ValueError("Amount must be greater than zero.")
+            if not self.validate_expense_amount(amount):
+                return
+
         except ValueError:
             print("Error: Invalid input. Use 'add <description> <amount>'.")
             return
@@ -119,9 +117,27 @@ class ExpenseTracker(cmd.Cmd):
             'date': datetime.now().strftime('%Y-%m-%d'),
         }
         self.expenses[str(expense_id)] = expense
-        # self.save_expenses()
         self.save_expense_operations(str(expense_id), 'added successfully')
-        # print(f"Expense added successfully (ID: {expense_id}).")
+
+    def validate_expense_amount(self, amount) -> bool:
+        """
+        Validate the expense amount.
+        :param amount: The amount
+        :return: Return True if amount is valid, otherwise false.
+        """
+        try:
+            amount = float(amount)
+
+            if amount <= 0:
+                print("Amount must be greater than zero!")
+                return False
+
+            return True
+
+        except ValueError:
+            print("Amount must be a number and greater than zero!")
+
+        return False
 
     def load_expenses(self, file: str) -> dict:
         """
@@ -146,7 +162,6 @@ class ExpenseTracker(cmd.Cmd):
         """
         print("")
         return True
-
 
     def do_exit(self, arg):
         """
