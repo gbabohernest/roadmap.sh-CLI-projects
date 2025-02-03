@@ -143,7 +143,7 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[expense_id].update({
             'description': description,
             'amount': amount,
-            'updated': datetime.now().strftime('%Y-%m-%d'),
+            'updated': datetime.now().strftime('%b-%d-%Y,  %I:%M %p'),
         })
 
         self.save_expense_operations(expense_id, 'updated successfully')
