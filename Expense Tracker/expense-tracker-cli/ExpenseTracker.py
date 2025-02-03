@@ -92,6 +92,28 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[str(expense_id)] = expense
         self.save_expense_operations(str(expense_id), 'added successfully')
 
+
+    def do_delete(self, arg):
+        """
+        Command to delete an existing expense.
+        Usage: delete <id>
+        :param arg: Expense ID
+        """
+
+        try:
+            expense_id = arg.strip()
+
+        except ValueError:
+            print('Error: Invalid input. Use "delete <id>". ')
+            return
+
+        if not self.validate_expense_id(self.expenses, expense_id):
+            return
+
+        del self.expenses[expense_id]
+
+        self.save_expense_operations(expense_id, 'deleted successfully')
+
     def do_update(self, args):
         """
         Command to update an existing expense.
@@ -115,7 +137,7 @@ class ExpenseTracker(cmd.Cmd):
                                                  'No update: The new description is the same as the current description.'):
             return
 
-        if not self.validate_expense_amount(amount):
+        if not self.validate_expense_amount(amount.strip()):
             return
 
         self.expenses[expense_id].update({
