@@ -102,6 +102,9 @@ class ExpenseTracker(cmd.Cmd):
         """
         try:
             description, amount = args.split(maxsplit=1)
+
+            if not self.validate_expense_description(self.expenses, description):
+                return
             if not self.validate_expense_amount(amount):
                 return
 
@@ -119,7 +122,25 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[str(expense_id)] = expense
         self.save_expense_operations(str(expense_id), 'added successfully')
 
-    def validate_expense_amount(self, amount) -> bool:
+    def validate_expense_description(self, expenses: dict,  description: str) -> bool:
+        """
+        Validate the expense description
+        :param expenses: A dict containing expenses.
+        :param description: Expense description
+        :return:
+        """
+
+        if expenses and description:
+            for expense in expenses.values():
+                if expense['description'].lower() == description.lower():
+                    # duplicate, or expense already exists.
+                    print("Error! Cannot Add Expense, Expense already exits.")
+                    return False
+
+            return True
+
+
+    def validate_expense_amount(self, amount: str) -> bool:
         """
         Validate the expense amount.
         :param amount: The amount
@@ -129,13 +150,13 @@ class ExpenseTracker(cmd.Cmd):
             amount = float(amount)
 
             if amount <= 0:
-                print("Amount must be greater than zero!")
+                print("Invalid: Amount must be greater than zero!")
                 return False
 
             return True
 
         except ValueError:
-            print("Amount must be a number and greater than zero!")
+            print("Invalid: Amount must be a number!")
 
         return False
 
