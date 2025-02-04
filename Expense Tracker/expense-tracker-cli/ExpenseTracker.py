@@ -94,7 +94,7 @@ class ExpenseTracker(cmd.Cmd):
 
     def do_list(self, _):
         """
-        List all expenses.
+        Command to list all expenses.
         """
         if not self.expenses:
             print("No expenses recorded.")
