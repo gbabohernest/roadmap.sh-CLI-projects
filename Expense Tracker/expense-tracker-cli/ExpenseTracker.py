@@ -92,6 +92,19 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[str(expense_id)] = expense
         self.save_expense_operations(str(expense_id), 'added successfully')
 
+    def do_list(self, _):
+        """
+        List all expenses.
+        """
+        if not self.expenses:
+            print("No expenses recorded.")
+            return
+
+        print(f"{'ID':<5} {'Date':<12} {'Description':<20} {'Amount':<10}")
+        print("-" * 50)
+        for expense in self.expenses.values():
+            print(f"{expense['id']:<5} {expense['date']:<12} {expense['description']:<20} ${expense['amount']:<10.2f}")
+
 
     def do_delete(self, arg):
         """
