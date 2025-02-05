@@ -95,19 +95,32 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[str(expense_id)] = expense
         self.save_expense_operations(str(expense_id), 'added successfully')
 
+
+    def check_expenses_dict(self, command: str):
+        """
+        check if the expenses dict is empty or not
+        :param command:
+        :return: Boolean, if expense return True, otherwise false.
+        """
+
+        if not self.expenses:
+            print(f'Error: No expenses recorded to {command}, add an expense.')
+            return False
+
+        return True
+
     def do_list(self, _):
         """
         Command to list all expenses.
         """
-        if not self.expenses:
-            print('Error: No expenses recorded to list, add an expense.')
+        if not self.check_expenses_dict('list'):
             return
 
         print(f"{'ID':<5} {'Date':<30} {'Updated':30} {'Description':<20} {'Amount':<10}")
         print("-" * 100)
         for expense in self.expenses.values():
             print(
-                f"{expense['id']:<5} {expense['date']:<30} {expense.get('updated', '----'):<30} {expense['description']:<20} ${float(expense['amount']):.2f}")
+                f"{expense['id']:<5} {expense['date']:<30} {expense.get('updated', '----'):<30} {expense['description']:<20} ${(expense['amount']):.2f}")
 
     def do_delete(self, arg):
         """
@@ -116,8 +129,7 @@ class ExpenseTracker(cmd.Cmd):
         :param arg: Expense ID
         """
 
-        if not self.expenses:
-            print("No expenses recorded to delete, add an expense!")
+        if not self.check_expenses_dict('delete'):
             return
         try:
             expense_id = arg.strip()
@@ -147,8 +159,7 @@ class ExpenseTracker(cmd.Cmd):
             print("Error: Invalid input. Use 'update <id> <description> <amount>'.")
             return
 
-        if not self.expenses:
-            print('Error: No expenses recorded to update, add an expense.')
+        if not self.check_expenses_dict('update'):
             return
 
         expense_id = expense_id.strip()
@@ -172,6 +183,7 @@ class ExpenseTracker(cmd.Cmd):
         })
 
         self.save_expense_operations(expense_id, 'updated successfully')
+
 
     def validate_expense_id(self, expenses: dict, expense_id: str) -> bool:
         """
