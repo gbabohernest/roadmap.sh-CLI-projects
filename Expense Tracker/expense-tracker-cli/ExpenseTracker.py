@@ -100,7 +100,7 @@ class ExpenseTracker(cmd.Cmd):
         Command to list all expenses.
         """
         if not self.expenses:
-            print('Error: No expenses recorded, add an expense.')
+            print('Error: No expenses recorded to list, add an expense.')
             return
 
         print(f"{'ID':<5} {'Date':<30} {'Updated':30} {'Description':<20} {'Amount':<10}")
@@ -116,12 +116,17 @@ class ExpenseTracker(cmd.Cmd):
         :param arg: Expense ID
         """
 
+        if not self.expenses:
+            print("No expenses recorded to delete, add an expense!")
+            return
         try:
             expense_id = arg.strip()
 
         except ValueError:
             print('Error: Invalid input. Use "delete <id>". ')
             return
+
+        expense_id = expense_id.strip()
 
         if not self.validate_expense_id(self.expenses, expense_id):
             return
@@ -143,7 +148,7 @@ class ExpenseTracker(cmd.Cmd):
             return
 
         if not self.expenses:
-            print('Error: No expenses to update, add an expense.')
+            print('Error: No expenses recorded to update, add an expense.')
             return
 
         expense_id = expense_id.strip()
