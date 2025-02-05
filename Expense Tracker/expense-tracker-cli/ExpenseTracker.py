@@ -95,20 +95,6 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[str(expense_id)] = expense
         self.save_expense_operations(str(expense_id), 'added successfully')
 
-
-    def check_expenses_dict(self, command: str):
-        """
-        check if the expenses dict is empty or not
-        :param command:
-        :return: Boolean, if expense return True, otherwise false.
-        """
-
-        if not self.expenses:
-            print(f'Error: No expenses recorded to {command}, add an expense.')
-            return False
-
-        return True
-
     def do_list(self, _):
         """
         Command to list all expenses.
@@ -184,6 +170,18 @@ class ExpenseTracker(cmd.Cmd):
 
         self.save_expense_operations(expense_id, 'updated successfully')
 
+    def check_expenses_dict(self, command: str):
+        """
+        check if the expenses dict is empty or not
+        :param command:
+        :return: Boolean, if expense return True, otherwise false.
+        """
+
+        if not self.expenses:
+            print(f'Error: No expenses recorded to {command}, add an expense.')
+            return False
+
+        return True
 
     def validate_expense_id(self, expenses: dict, expense_id: str) -> bool:
         """
