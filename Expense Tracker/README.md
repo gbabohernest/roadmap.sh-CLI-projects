@@ -9,4 +9,5 @@ delete, and view your expenses, along with providing summaries to give you insig
  - Update Expenses: Modify existing expenses using its ID.
  - Delete Expenses: Remove an expense using its ID.
  - View All Expenses: List all expenses with their details.
- - Summary: View the total expenses or expenses for a specific month.
+ - Summary: Summarize expenses for a specific month or all time.
+ - Persistent storage using JSON
