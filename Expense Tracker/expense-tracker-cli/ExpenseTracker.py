@@ -76,6 +76,9 @@ class ExpenseTracker(cmd.Cmd):
             print("Error: Invalid input. Use 'add <description> <amount>'.")
             return
 
+        description = description.strip()
+        amount = amount.strip()
+
         if not self.validate_expense_description(self.expenses, description):
             return
 
@@ -86,7 +89,7 @@ class ExpenseTracker(cmd.Cmd):
         expense = {
             'id': expense_id,
             'description': description,
-            'amount': amount,
+            'amount': float(amount.strip()),
             'date': datetime.now().strftime('%b-%d-%Y  %I:%M %p'),
         }
         self.expenses[str(expense_id)] = expense
@@ -143,19 +146,23 @@ class ExpenseTracker(cmd.Cmd):
             print('Error: No expenses to update, add an expense.')
             return
 
-        if not self.validate_expense_id(self.expenses, expense_id.strip()):
+        expense_id = expense_id.strip()
+        description = description.strip()
+        amount = amount.strip()
+
+        if not self.validate_expense_id(self.expenses, expense_id):
             return
 
         if not self.validate_expense_description(self.expenses, description,
                                                  'No update: The new description is the same as the current description.'):
             return
 
-        if not self.validate_expense_amount(amount.strip()):
+        if not self.validate_expense_amount(amount):
             return
 
         self.expenses[expense_id].update({
             'description': description,
-            'amount': amount,
+            'amount': float(amount),
             'updated': datetime.now().strftime('%b-%d-%Y  %I:%M %p'),
         })
 
