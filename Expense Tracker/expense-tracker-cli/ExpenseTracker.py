@@ -7,6 +7,7 @@ import json
 import cmd
 from datetime import datetime
 from json import JSONDecodeError
+from time import strptime
 
 
 class ExpenseTracker(cmd.Cmd):
@@ -106,7 +107,7 @@ class ExpenseTracker(cmd.Cmd):
         print("-" * 100)
         for expense in self.expenses.values():
             print(
-                f"{expense['id']:<5} {expense['date']:<30} {expense.get('updated', '----'):<30} {expense['description']:<20} ${(expense['amount']):.2f}")
+                f"{expense['id']:<5} {expense['date']:<30} {expense.get('updated', '--------'):<30} {expense['description']:<20} ${(expense['amount']):.2f}")
 
     def do_delete(self, arg):
         """
@@ -169,6 +170,52 @@ class ExpenseTracker(cmd.Cmd):
         })
 
         self.save_expense_operations(expense_id, 'updated successfully')
+
+    def do_summary(self, arg):
+        """
+        Command to show a summary of all expenses or for a particular month.
+        Usage: summary |  summary <month>
+        :param arg: The month in number (1-12). Example: summary 8
+        """
+
+        if not self.check_expenses_dict('summarize'):
+            return
+
+        all_expenses = self.expenses.values()
+
+        months = {
+            1: 'January', 2: 'February', 3: 'March', 4: 'April',
+            5: 'May', 6: 'June', 7: 'July', 8: 'August',
+            9: 'September', 10: 'October', 11: 'November', 12: 'December'
+        }
+
+        if arg:
+
+            try:
+                filter_month = int(arg.strip())
+            except ValueError:
+                print('Error: Month should be a number')
+                return
+
+            if not (1 <= filter_month <= 12):
+                print(f"Error: Month should between 1 - 12")
+                return
+
+            filtered_expenses = [
+                expense['amount'] for expense in all_expenses if
+                datetime.strptime(expense['date'].split()[0], '%b-%d-%Y').month == filter_month
+            ]
+
+            if not filtered_expenses:
+                print(f"NO Expenses recorded for {months[filter_month]}")
+
+            else:
+                total_expense = sum(filtered_expenses)
+                print(f"Total expense for {months[filter_month]}: ${total_expense:.2f}")
+
+        else:
+            total_expense = sum(expense['amount'] for expense in all_expenses)
+            print(f"Total expenses: ${total_expense:.2f}")
 
     def check_expenses_dict(self, command: str):
         """
