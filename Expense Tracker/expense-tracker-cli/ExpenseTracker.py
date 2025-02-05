@@ -87,7 +87,7 @@ class ExpenseTracker(cmd.Cmd):
             'id': expense_id,
             'description': description,
             'amount': amount,
-            'date': datetime.now().strftime('%b-%d-%Y,  %I:%M %p'),
+            'date': datetime.now().strftime('%b-%d-%Y  %I:%M %p'),
         }
         self.expenses[str(expense_id)] = expense
         self.save_expense_operations(str(expense_id), 'added successfully')
@@ -97,14 +97,14 @@ class ExpenseTracker(cmd.Cmd):
         Command to list all expenses.
         """
         if not self.expenses:
-            print("No expenses recorded.")
+            print('Error: No expenses recorded, add an expense.')
             return
 
-        print(f"{'ID':<5} {'Date':<12} {'Description':<20} {'Amount':<10}")
-        print("-" * 50)
+        print(f"{'ID':<5} {'Date':<30} {'Updated':30} {'Description':<20} {'Amount':<10}")
+        print("-" * 100)
         for expense in self.expenses.values():
-            print(f"{expense['id']:<5} {expense['date']:<12} {expense['description']:<20} ${expense['amount']:<10.2f}")
-
+            print(
+                f"{expense['id']:<5} {expense['date']:<30} {expense.get('updated', '----'):<30} {expense['description']:<20} ${float(expense['amount']):.2f}")
 
     def do_delete(self, arg):
         """
@@ -156,7 +156,7 @@ class ExpenseTracker(cmd.Cmd):
         self.expenses[expense_id].update({
             'description': description,
             'amount': amount,
-            'updated': datetime.now().strftime('%b-%d-%Y,  %I:%M %p'),
+            'updated': datetime.now().strftime('%b-%d-%Y  %I:%M %p'),
         })
 
         self.save_expense_operations(expense_id, 'updated successfully')
