@@ -4,7 +4,7 @@ A CLI-based number guessing game where the user inputs a custom range, and the c
 
 ### Folder Structure
 
-| Directory Name                                             | Description                      |
-|------------------------------------------------------------|----------------------------------|
-| [Number Guessing Game ](number guessing game)              | Game algorithm written in Python |
-| [Number Guessing Game - PHP]('number guessing game - php') | Game algorithm written in PHP    |                                       
+| Directory Name                                               | Description                      |
+|--------------------------------------------------------------|----------------------------------|
+| [Number Guessing Game ](./'number%20guessing%20game')        | Game algorithm written in Python |
+| [Number Guessing Game - PHP](./'number guessing game - php') | Game algorithm written in PHP    |                                       
