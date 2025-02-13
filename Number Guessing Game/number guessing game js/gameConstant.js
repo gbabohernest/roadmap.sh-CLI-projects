@@ -16,3 +16,5 @@ const difficulties = {
         chances: 3
     },
 }
+
+const highScoreFile = 'highScores.json';
