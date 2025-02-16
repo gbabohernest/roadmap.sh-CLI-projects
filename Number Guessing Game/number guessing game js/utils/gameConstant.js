@@ -1,6 +1,6 @@
 //Game constant
 
-const difficulties = {
+const DIFFICULTIES = {
     1: {
         name: 'Easy',
         chances: 10,
@@ -18,3 +18,5 @@ const difficulties = {
 }
 
 const highScoreFile = 'highScores.json';
+
+module.exports = { DIFFICULTIES };
