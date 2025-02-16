@@ -15,4 +15,4 @@ const getUserInput = (prompt) => {
     })
 }
 
-module.exports = {getUserInput};
+module.exports = { getUserInput };
