@@ -29,7 +29,7 @@ const startGame = async () => {
             chances = DIFFICULTIES[levelInput['chances']];
         } else {
             console.error('Invalid choice! Please select a valid level [1, 2, or 3]');
-            // try to prompt user if they want to quit or not.
+            //TODO try to prompt user if they want to quit or not.
         }
     }
 
