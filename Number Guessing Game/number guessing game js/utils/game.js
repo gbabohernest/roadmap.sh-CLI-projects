@@ -1,19 +1,18 @@
 // main game logic
 const { DIFFICULTIES } = require('./gameConstant');
-const { getUserInput } = require('')
+const { getUserInput } = require('./inputs');
 
 /*
 *  A function that control the game logic
-* */
-const startGame = () => {
+**/
 
-    console.clear();
-    console.log('Welcome to the Number Guessing Game\n');
-    const difficulties = utilFuns.chooseGameLevel()
-    console.log(difficulties);
-    utilFuns.getCustomRange();
+const startGame = async () => {
+    console.log('\nSelect a difficulty level:');
+
+    for (const [key, level] of Object.entries(DIFFICULTIES)) {
+        console.log(`${key}: ${level['name']}`);
+    }
 
 }
-
-// module.exports =  startGame;
+module.exports =  { startGame };
 
