@@ -6,41 +6,41 @@ const {getUserInput} = require('./inputs');
  *  @param chancesLeft :(Number) - Amount of chances left to guess the number.
  */
 const playGame = async (secretNumber, chancesLeft) => {
-    //TODO work on the number of chances left , mostly espically if user missed or wrong type bad guess
-
     let usedAttempts = 0;
+    console.log(`for debugging, computer guess is: ${secretNumber}`); // remove later.
+
     while (chancesLeft > 0) {
         const userGuess = await getUserInput('Enter your guess: ');
         const guess = parseInt(userGuess, 10);
 
-        if (isNaN(guess) && guess <= 0) {
-            console.error('Invalid input, Please enter a valid number greater than 0.');
-            continue;
+        if (!isNaN(guess) && guess > 0) {
+            usedAttempts++;
+            chancesLeft--;
+
+            if (guess === secretNumber) {
+                console.log(`Congratulations! You guessed the correct number in ${usedAttempts} attempts.`)
+                return;
+
+            } else if (guess < secretNumber) {
+                console.log(`Incorrect! The number is greater than ${guess}.`);
+
+            } else {
+                console.log(`Incorrect! The number is less than ${guess}.`)
+            }
+
+            console.log(`Chances left: ${chancesLeft}`);
+
             //TODO prompt user if they want to quit or continue.
-        }
-
-        /*
-        if (guess < 1 || guess > 100) {
-            console.error('Invalid, Please enter a number greater than 0');
-            continue;
-            //TODO prompt user if they want to quit or continue.
-        }
-        */
-        usedAttempts++;
-        chancesLeft--;
-        if (guess === secretNumber) {
-            console.log(`Congratulations! You guessed the correct number in ${usedAttempts} attempts.`)
-
-        } else if (guess < secretNumber) {
-            console.log(`Incorrect! The number is greater than ${guess}.\n`);
-
         } else {
-            console.log(`Incorrect! The number is less than ${guess}.\n`)
+            // WRONG INPUT!
+            console.error('Invalid input, Please enter a valid number greater than 0.');
         }
-
-        console.log(`Chances left: ${chancesLeft}`);
     }
 
     // Didn't guess the number correctly, game over
     console.log(`Game over, you ran out of guesses. The correct number was ${secretNumber}`);
+    //TODO: Ask user if they want to continue playing.
 }
+
+
+module.exports = {playGame};
