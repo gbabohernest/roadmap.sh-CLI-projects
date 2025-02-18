@@ -22,3 +22,11 @@ const loadHighScore  = () => {
     return JSON.parse(fs.readFileSync(highScoreFile, 'utf-8'))
 }
 
+/**
+ * Save high scores back into the JSON file.
+ * @param score : Number  - user score to save in the file.
+ */
+const saveHighScores = (score) => {
+    fs.writeFileSync(highScoreFile, JSON.stringify(score, null, 2));
+}
+
