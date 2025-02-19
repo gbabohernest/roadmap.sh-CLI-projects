@@ -17,6 +17,23 @@ const DIFFICULTIES = {
     },
 }
 
-const highScoreFile = 'highScores.json';
+const SCORES_PER_LEVEL = {
+    Easy: {
+        score: 50,
+        bonus: 5,
+    },
 
-module.exports = { DIFFICULTIES };
+    Medium: {
+        score: 75,
+        bonus: 10,
+    },
+
+    Hard: {
+        score: 100,
+        bonus: 20,
+    }
+}
+
+const HIGH_SCORE_FILE = 'highScores.json';
+
+module.exports = { DIFFICULTIES, HIGH_SCORE_FILE, SCORES_PER_LEVEL };
