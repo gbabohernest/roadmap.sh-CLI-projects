@@ -24,11 +24,24 @@ const loadHighScore = () => {
 
 /**
  * Save high scores back to the JSON file.
- * @param score : Number  - user score to save in the file.
+ * @param scores : Object  - An object containing the scores.
  */
-const saveHighScores = (score) => {
-    fs.writeFileSync(highScoreFile, JSON.stringify(score, null, 2));
+const saveHighScores = (scores) => {
+    fs.writeFileSync(highScoreFile, JSON.stringify(scores, null, 2));
 }
 
 
+/**
+ * Update high scores if the player achieve a new best score
+ * @param playerName : string - Name of the player.
+ * @param score : Number - Player's score.
+ */
+const updateHighScore = (playerName, score) => {
+    const allHighScores = loadHighScore();
 
+    if (!allHighScores[playerName] || score > allHighScores[playerName]) {
+        allHighScores[playerName] = score;
+        saveHighScores(allHighScores);
+        console.log(`New high score for ${playerName} : ${score} `)
+    }
+}
