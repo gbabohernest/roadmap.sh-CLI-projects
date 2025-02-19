@@ -17,6 +17,6 @@ const DIFFICULTIES = {
     },
 }
 
-const highScoreFile = 'highScores.json';
+const HIGH_SCORE_FILE = 'highScores.json';
 
-module.exports = { DIFFICULTIES };
+module.exports = { DIFFICULTIES, HIGH_SCORE_FILE };
