@@ -47,3 +47,30 @@ const updateHighScore = (playerName, score) => {
         console.log(`New high score for ${playerName} : ${score} `)
     }
 }
+
+
+/**
+ * Display the leaderboard sorted by highest score.
+ */
+const displayLeaderboard = () => {
+    const highScores = loadHighScore(highScoreFile);
+
+    if (Object.keys(highScores).length !== 0) {
+        // we have scores to display
+        console.log(`\n------------------GAME LEADERBOARD------------------`);
+
+        // sort scores in descending order.
+        const sortedScores = Object.entries(highScores).sort((a, b) => b[1] - a[1]);
+
+        console.log("Guessing Game Top Scores List.")
+        console.log(`No.\tPlayer Name\tScore`)
+        sortedScores.forEach(([pName, score], index) => {
+            console.log(`${index + 1}.\t${pName}\t${score} `);
+        });
+
+        console.log(`-----------------------------------------------------`);
+    }
+}
+
+
+module.exports = { updateHighScore, displayLeaderboard };
