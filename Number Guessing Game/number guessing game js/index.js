@@ -5,34 +5,34 @@
 * */
 
 const { startGame } = require('./utils/game')
-const { displayLeaderboard } = require('./utils/userScoreHandler');
+const { displayLeaderboard} = require('./utils/userScoreHandler');
 const { getUserOption } = require('./utils/getUserOption');
 
-async function main () {
-      console.log('Welcome to the Number Guessing Game!!');
-      console.log("Game menu");
-      console.log("1. Play Game\n2. View Leaderboard\n3. Exit");
+async function main() {
+    console.log('Welcome to the Number Guessing Game!!');
+    console.log("Game menu");
+    console.log("1. Play Game\n2. View Leaderboard\n3. Exit");
 
-      let choice;
+    let choice;
 
-      do {
-          choice = await getUserOption();
-      } while(!choice);
+    do {
+        choice = await getUserOption();
+    } while (!choice);
 
-      if (choice) {
+    if (choice) {
 
-          switch (choice) {
-              case 1:
-                  await startGame();
-                  break;
-              case 2:
-                  displayLeaderboard();
-                  break;
-              case 3:
-                  process.exit(0)
-                  break;
-          }
-      }
+        switch (choice) {
+            case 1:
+                await startGame();
+                break;
+            case 2:
+                displayLeaderboard();
+                break;
+            case 3:
+                process.exit(0)
+                break;
+        }
+    }
 }
 
 main();
