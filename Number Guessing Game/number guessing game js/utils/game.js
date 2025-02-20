@@ -3,9 +3,10 @@
  */
 
 
-const {DIFFICULTIES} = require('./gameConstant');
-const {getUserInput} = require('./inputs');
-const {playGame} = require('./playGame');
+const { DIFFICULTIES} = require('./gameConstant');
+const { getUserInput } = require('./inputs');
+const { getUserName } = require('./getUserName');
+const { playGame } = require('./playGame');
 
 /*
 *  A function that control the game logic
@@ -35,6 +36,12 @@ const startGame = async () => {
         }
     }
 
+    let playerName;
+    do {
+        playerName = await getUserName();
+    } while (!playerName)
+
+
     const maxChances = chances;
     const secretNumber = Math.floor(Math.random() * 100) + 1;
 
@@ -42,10 +49,10 @@ const startGame = async () => {
     console.log("Let's start the game!\n");
 
     //get the user's input;
-    playGame(secretNumber, maxChances);
+    playGame(secretNumber, maxChances, difficulty, maxChances, playerName);
 
 }
 
 
-module.exports = {startGame};
+module.exports = { startGame };
 
