@@ -63,9 +63,16 @@ const displayLeaderboard = () => {
         const sortedScores = Object.entries(highScores).sort((a, b) => b[1] - a[1]);
 
         console.log("Guessing Game Top Scores List.")
-        console.log(`No.\tPlayer Name\t\tScore`)
+        console.log(`No.   Player Name${' '.repeat(30 - 9)}Score`);
+
         sortedScores.forEach(([pName, score], index) => {
-            console.log(`${index + 1}.\t${pName}\t\t\t${score} `);
+
+            const number = `${index + 1}. `.padEnd(5);
+            const name = pName.padEnd(30);
+            const scoreStr = `${score}`.padStart(5)
+
+            console.log(`${number} ${name} ${scoreStr}`);
+
         });
 
         console.log(`-----------------------------------------------------`);
