@@ -4,7 +4,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { HIGH_SCORE_FILE} = require('./gameConstant');
+const {HIGH_SCORE_FILE} = require('./gameConstant');
 
 // console.log(HIGH_SCORE_FILE)
 const highScoreFile = path.join(__dirname, "..", HIGH_SCORE_FILE);
