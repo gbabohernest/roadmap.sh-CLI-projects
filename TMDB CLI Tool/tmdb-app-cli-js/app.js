@@ -12,9 +12,17 @@ const getMovieCategory = (category) => {
     top: "top_rated",
     upcoming: "upcoming",
   };
+
+  if (!(category in movieCategories)) {
+    console.error("Error, Please provide a valid type");
+    process.exit(1);
+  }
+
+  return movieCategories[category];
+  // console.log(movieCategories[category]);
 };
 
-const category = process.argv[2];
+const category = process.argv[2].trim();
 
 if (!category) {
   console.log("Error, Please enter movie category to fetch details");
