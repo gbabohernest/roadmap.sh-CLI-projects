@@ -1,7 +1,5 @@
 import * as process from "node:process";
 
-console.log(process.argv);
-
 /**
  * fetches GitHub user activity using the GitHub API
  * @param username : string  - GitHub username
@@ -28,4 +26,42 @@ const fetchGithubUserActivity = async (username) => {
   }
 };
 
-await fetchGithubUserActivity(process.argv[2]);
+const displayUserActivity = (events, username) => {
+  if (events.length === 0 && username) {
+    console.log(`No recent activity found for user ${username}`);
+    return;
+  }
+  const arrayObject = events.slice(10);
+  let action;
+  arrayObject.forEach((event) => {
+    switch (event.type) {
+      case "PushEvent":
+        const numOfCommit = event.payload.commits.length;
+        const repoName = event.repo.name;
+        action = `Pushed ${numOfCommit} to ${repoName}`;
+        break;
+
+      case "IssuesEvent":
+        action = `${event.payload.action.charAt(0).toUpperCase() + event.payload.action.slice(1)} an issue in ${event.repo.name}`;
+        break;
+
+      case "WatchEvent":
+        action = `Starred ${event.repo.name}`;
+        break;
+
+      default:
+        action = `${event.type.replace("Event", "")} in ${event.repo.name}`;
+    }
+  });
+  console.log(`-- ${action}`);
+};
+
+const username = process.argv[2];
+
+if (!username) {
+  console.error("Username is required, Pls enter username:");
+  process.exit(1);
+}
+
+const userData = await fetchGithubUserActivity(username);
+displayUserActivity(userData, username);
