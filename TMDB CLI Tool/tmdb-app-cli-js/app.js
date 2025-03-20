@@ -1,5 +1,5 @@
 import process from "node:process";
-
+import { API_ACCESS_TOKEN } from "./apiKey.js";
 /**
  * Get the movie category from the command line
  * @param category : string
@@ -22,6 +22,29 @@ const getMovieCategory = (category) => {
   // console.log(movieCategories[category]);
 };
 
+const fetchMovieDetails = async (movieCategory, accessToken) => {
+  const url = `https://api.themoviedb.org/3/movie/${movieCategory}?language=en-US&page=1`;
+  const header = {
+    headers: {
+      "User-Agent": "TMDB CLI Tools",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  try {
+    const response = await fetch(url, header);
+
+    if (!response.ok) {
+      throw new Error(
+        `HTTP Error! Status: ${response.status} : Message: ${response.statusText}`,
+      );
+    }
+    return await response.json();
+  } catch (error) {
+    console.error({ error: error.message });
+  }
+};
+
 const category = process.argv[2].trim();
 
 if (!category) {
@@ -29,4 +52,6 @@ if (!category) {
   process.exit(1);
 }
 
-getMovieCategory(category);
+const movieCategory = getMovieCategory(category);
+const data = await fetchMovieDetails(movieCategory, API_ACCESS_TOKEN);
+console.log(data);
