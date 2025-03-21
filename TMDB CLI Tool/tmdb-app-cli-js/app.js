@@ -1,9 +1,10 @@
 import process from "node:process";
 import { API_ACCESS_TOKEN } from "./apiKey.js";
+
 /**
  * Get the movie category from the command line
- * @param category : string
- * @return string
+ * @param category : string - The category of the movie
+ * @return string - movie category (popular, now-playing, top-rated, upcoming)
  */
 const getMovieCategory = (category) => {
   const movieCategories = {
@@ -19,7 +20,6 @@ const getMovieCategory = (category) => {
   }
 
   return movieCategories[category];
-  // console.log(movieCategories[category]);
 };
 
 const fetchMovieDetails = async (movieCategory, accessToken) => {
