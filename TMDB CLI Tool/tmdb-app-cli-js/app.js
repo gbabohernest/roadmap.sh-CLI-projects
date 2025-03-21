@@ -22,6 +22,12 @@ const getMovieCategory = (category) => {
   return movieCategories[category];
 };
 
+/**
+ * Fetch movies information from TMBD.
+ * @param movieCategory - category of movies (popular, top-rated, upcoming, now-playing)
+ * @param accessToken - TMDB API access token
+ * @returns {Promise<any>} - A promise
+ */
 const fetchMovieDetails = async (movieCategory, accessToken) => {
   const url = `https://api.themoviedb.org/3/movie/${movieCategory}?language=en-US&page=1`;
   const header = {
