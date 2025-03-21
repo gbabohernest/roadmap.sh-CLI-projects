@@ -51,6 +51,12 @@ const fetchMovieDetails = async (movieCategory, accessToken) => {
   }
 };
 
+/**
+ * Display movie info in a tabular format.
+ * @param movieData : Array  - An array of objects containing movie information.
+ * @param movieCategory : String  - category of movies to display.
+ */
+
 const displayMovieData = (movieData, movieCategory) => {
   const categories = {
     now_playing: "Now Playing",
@@ -74,6 +80,38 @@ const displayMovieData = (movieData, movieCategory) => {
     adult: "Adult Film",
     vote_average: "Rating",
   };
+
+  const movies = movieData.results || [];
+
+  if (!movies) {
+    console.error("No movie data found.");
+    return;
+  }
+
+  const fields = category_fields[movieCategory];
+
+  if (!fields) {
+    console.log("Invalid movie category provided");
+    return;
+  }
+
+  const header = fields
+    .map((field) => field_headers[field].padEnd(30))
+    .join("");
+
+  console.log(
+    `\nThe following are the best five (5) ${categories[movieCategory]} movies right now.\n`,
+  );
+  console.log(header);
+  console.log("-".repeat(header.length));
+
+  // display movie data
+  movies.slice(0, 5).forEach((movie) => {
+    const row = fields
+      .map((field) => String(movie[field] || "N/A").padEnd(30))
+      .join("");
+    console.log(row);
+  });
 };
 
 const category = process.argv[2].trim();
@@ -85,4 +123,5 @@ if (!category) {
 
 const movieCategory = getMovieCategory(category);
 const data = await fetchMovieDetails(movieCategory, API_ACCESS_TOKEN);
-console.log(data);
+displayMovieData(data, movieCategory);
+// console.log(data);
