@@ -45,6 +45,31 @@ const fetchMovieDetails = async (movieCategory, accessToken) => {
   }
 };
 
+const displayMovieData = (movieData, movieCategory) => {
+  const categories = {
+    now_playing: "Now Playing",
+    popular: "Popular",
+    top_rated: "Top Rated",
+    upcoming: "Upcoming",
+  };
+
+  const category_fields = {
+    popular: ["title", "release_date", "popularity", "vote_count", "adult"],
+    now_playing: ["title", "release_date", "adult"],
+    top_rated: ["title", "release_date", "vote_average", "adult"],
+    upcoming: ["title", "release_date", "adult"],
+  };
+
+  const field_headers = {
+    title: "Movie Title",
+    release_date: "Release Date",
+    popularity: "Popularity",
+    vote_count: "Vote Count",
+    adult: "Adult Film",
+    vote_average: "Rating",
+  };
+};
+
 const category = process.argv[2].trim();
 
 if (!category) {
