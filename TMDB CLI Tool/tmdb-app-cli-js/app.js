@@ -124,4 +124,3 @@ if (!category) {
 const movieCategory = getMovieCategory(category);
 const data = await fetchMovieDetails(movieCategory, API_ACCESS_TOKEN);
 displayMovieData(data, movieCategory);
-// console.log(data);
